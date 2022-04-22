@@ -1,5 +1,12 @@
+import kernel.http.Rest;
+
 public class App {
+
     public static void main(String[] args) throws Exception {
-        System.out.println("Hello, World!");
+
+        Rest.addController(AeronaveApi.class);
+        Rest.start();
+
     }
+
 }
