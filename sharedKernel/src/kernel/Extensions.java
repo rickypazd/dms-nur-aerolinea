@@ -1,7 +1,7 @@
 package kernel;
 
 public class Extensions {
-    public Class[] classes = {
+    public static Class[] classes = {
             kernel.core.AggregateRoot.class,
             kernel.core.DomainEvent.class,
             kernel.core.Entity.class,

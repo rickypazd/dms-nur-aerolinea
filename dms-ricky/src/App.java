@@ -3,7 +3,6 @@ import kernel.http.Rest;
 import Api.AeronaveApi;
 import Application.UseCases.Queries.Aeronaves.GetAeronaveByKeyHandler;
 import Application.UseCases.Command.Aeronaves.*;
-import kernel.http.Rest;
 import kernel.mediator.IMediator;
 
 public class App {
