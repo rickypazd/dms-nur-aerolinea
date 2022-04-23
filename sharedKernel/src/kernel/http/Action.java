@@ -7,12 +7,7 @@ import java.lang.reflect.Parameter;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Collections;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -20,7 +15,6 @@ import com.google.gson.Gson;
 
 import org.jboss.com.sun.net.httpserver.HttpExchange;
 
-import kernel.core.ApplicationContext;
 import kernel.http.Exception.HttpCodeException;
 import kernel.http.Exception.HttpException;
 import kernel.http.annotation.DeleteMapping;
@@ -29,8 +23,6 @@ import kernel.http.annotation.PathVariable;
 import kernel.http.annotation.PostMapping;
 import kernel.http.annotation.PutMapping;
 import kernel.http.annotation.RequestBody;
-import kernel.mediator.IMediator;
-import kernel.mediator.Request;
 
 public class Action {
     enum ActionType {
@@ -176,51 +168,6 @@ public class Action {
         return this.method.invoke(instance, arg);
 
     }
-
-    // public void onMessage(HttpExchange t, Response response, String path, String
-    // data, Object instance) {
-
-    // Class[] paramTypes = this.method.getParameterTypes();
-
-    // ArrayList<Object> values = new ArrayList<Object>();
-    // if (params.size() > 0) {
-    // String[] r_route = path.split("/");
-    // String[] m_route = this.route.split("/");
-
-    // for (int i = 0; i < m_route.length; i++) {
-    // if (m_route[i].startsWith("{") && m_route[i].endsWith("}")) {
-    // values.add(parseValue(r_route[i], paramTypes[values.size()]));
-    // }
-    // }
-    // if (values.size() != params.size()) {
-    // response.setCode(Response.BAD_REQUEST);
-    // response.setBody("Error en la cantidad de parametros");
-    // return;
-    // }
-    // }
-    // if (values.size() < paramTypes.length) {
-    // for (int i = values.size(); i < paramTypes.length; i++) {
-    // values.add(parseValue(data, paramTypes[i]));
-    // }
-    // }
-
-    // try {
-    // Object resp = this.method.invoke(instance, values.toArray());
-    // if (resp == null) {
-    // response.setCode(Response.OK);
-    // response.setBody("");
-    // return;
-    // } else {
-    // response.setBody(resp.toString());
-    // return;
-    // }
-    // } catch (Exception e) {
-    // response.setCode(Response.INTERNAL_SERVER_ERROR);
-    // response.setBody(e.getLocalizedMessage());
-    // return;
-    // }
-
-    // }
 
     public Object parseValue(Object value, Class<?> type) {
         if (type == String.class) {

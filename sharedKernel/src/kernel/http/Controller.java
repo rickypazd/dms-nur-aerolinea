@@ -7,7 +7,6 @@ import java.util.ArrayList;
 
 import org.jboss.com.sun.net.httpserver.HttpExchange;
 
-import kernel.core.ApplicationContext;
 import kernel.http.Exception.HttpCodeException;
 import kernel.http.annotation.RequestMapping;
 import kernel.http.annotation.RestController;

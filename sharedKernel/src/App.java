@@ -13,6 +13,7 @@ public class App {
         // Register handlers
         IMediator.registerHandler(GetAeronaveByKeyHandler.class);
         IMediator.registerHandler(CrearAeronaveHandler.class);
+        
         // Create the kernel
         Rest.addController(AeronaveApi.class);
         Rest.start();
