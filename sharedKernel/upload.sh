@@ -1,0 +1,1 @@
+scp sharedKernel.jar dmsnur@servisofts.com:~/kernel/sharedKernel.jar
