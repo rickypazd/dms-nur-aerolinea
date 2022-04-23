@@ -1,6 +1,7 @@
 package kernel.http;
 
 import java.lang.annotation.Annotation;
+import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Parameter;
@@ -203,18 +204,32 @@ public class Action {
         Class[] i = type.getInterfaces();
         if (i.length > 0) {
             if (i[0].getName().equals("kernel.mediator.Request")) {
-                try {
-                    return type.getConstructor().newInstance();
-                } catch (InstantiationException | IllegalAccessException | IllegalArgumentException
-                        | InvocationTargetException | NoSuchMethodException | SecurityException e) {
-                    e.printStackTrace();
-                }
+                return createRequest(type, value);
             }
-
         }
-
         return new Gson().fromJson(value.toString(), type);
 
+    }
+
+    public Object createRequest(Class type, Object value) {
+        Object instance;
+        try {
+            Constructor[] constructors = type.getConstructors();
+            for (Constructor constructor : constructors) {
+                ArrayList<Object> values = new ArrayList<>();
+                Class[] paramTypes = constructor.getParameterTypes();
+                for (Class paramt : paramTypes) {
+                    values.add(new Gson().fromJson(value.toString(), paramt));
+                }
+                instance = constructor.newInstance(values.toArray());
+                return instance;
+            }
+            instance = type.getConstructor().newInstance();
+        } catch (InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException
+                | NoSuchMethodException | SecurityException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     public Method getMethod() {

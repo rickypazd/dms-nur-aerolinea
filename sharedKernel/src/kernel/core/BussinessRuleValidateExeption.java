@@ -5,6 +5,10 @@ public class BussinessRuleValidateExeption extends Exception {
     public BussinessRule BrokenRule;
     public String Details;
 
+    public BussinessRuleValidateExeption(String detail) {
+        Details = detail;
+    }
+
     public BussinessRuleValidateExeption(BussinessRule brokenRule) {
         BrokenRule = brokenRule;
         Details = brokenRule.Message();
@@ -15,7 +19,7 @@ public class BussinessRuleValidateExeption extends Exception {
     }
 
     // private void setDetails(String details) {
-    //     Details = details;
+    // Details = details;
     // }
 
     public BussinessRule getBrokenRule() {
@@ -23,7 +27,7 @@ public class BussinessRuleValidateExeption extends Exception {
     }
 
     // private void setBrokenRule(BussinessRule brokenRule) {
-    //     BrokenRule = brokenRule;
+    // BrokenRule = brokenRule;
     // }
 
     @Override

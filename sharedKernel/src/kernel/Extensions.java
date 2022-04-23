@@ -5,6 +5,8 @@ public class Extensions {
             kernel.core.AggregateRoot.class,
             kernel.core.DomainEvent.class,
             kernel.core.Entity.class,
+            kernel.core.ValueObject.class,
+            kernel.core.BussinessRuleValidateExeption.class,
             // http
             kernel.http.Rest.class,
             // rule

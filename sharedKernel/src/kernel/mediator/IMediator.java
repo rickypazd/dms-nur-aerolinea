@@ -1,5 +1,6 @@
 package kernel.mediator;
 
+import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
@@ -7,6 +8,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import kernel.IServiceCollection;
 
 /**
  * Default implementation of Mediator
@@ -44,10 +46,11 @@ public class IMediator implements Mediator {
     }
 
     @Override
-    public <T> Response<T> send(Request<T> request) {
-        Response<T> response = new Response<>();
+    public <T, E> Response<E> send(Request<T> request) {
+        Response<E> response = new Response<>();
         try {
-            MediatorPlanRequest<T> plan = new MediatorPlanRequest<>(RequestHandler.class, "handle", request.getClass(),
+            MediatorPlanRequest<T, E> plan = new MediatorPlanRequest<>(RequestHandler.class, "handle",
+                    request.getClass(),
                     ctx);
             response.data = plan.invoke(request);
         } catch (Exception e) {
@@ -80,7 +83,7 @@ public class IMediator implements Mediator {
         return response;
     }
 
-    class MediatorPlanRequest<T> {
+    class MediatorPlanRequest<T, E> {
         Method handleMethod;
         Class handlerInstanceBuilder;
         Object instance;
@@ -89,10 +92,27 @@ public class IMediator implements Mediator {
                 Class context) throws NoSuchMethodException, SecurityException, ClassNotFoundException {
             handlerInstanceBuilder = getBean(handlerType, messageType, context);
             try {
-                instance = handlerInstanceBuilder.getConstructor().newInstance();
+                Constructor[] arr_constructores = handlerInstanceBuilder.getConstructors();
+                if (arr_constructores.length > 0) {
+                    Class[] param_types = arr_constructores[0].getParameterTypes();
+                    if (param_types.length > 0) {
+                        ArrayList<Object> params = new ArrayList<>();
+                        for (Class parameter : param_types) {
+                            Class param = IServiceCollection.GetTransient(parameter);
+                            if (param.getConstructor() == null) {
+                                throw new RuntimeException(
+                                        "The handler " + param.getName()
+                                                + " has no default void constructor");
+                            }
+                            params.add(param.getConstructor().newInstance());
+                        }
+                        instance = arr_constructores[0].newInstance(params.toArray());
+                    } else {
+                        instance = arr_constructores[0].newInstance();
+                    }
+                }
             } catch (InstantiationException | IllegalAccessException | IllegalArgumentException
                     | InvocationTargetException e) {
-                // TODO Auto-generated catch block
                 e.printStackTrace();
             }
             // handleMethod = handlerInstanceBuilder.getDeclaredMethod(handlerMethodName,
@@ -138,9 +158,9 @@ public class IMediator implements Mediator {
             throw new ClassNotFoundException("Handler not found. Did you forget to register this?");
         }
 
-        public T invoke(Request<T> request)
+        public E invoke(Request<T> request)
                 throws IllegalAccessException, IllegalArgumentException, InvocationTargetException {
-            return (T) handleMethod.invoke(instance, request);
+            return (E) handleMethod.invoke(instance, request);
         }
     }
 
