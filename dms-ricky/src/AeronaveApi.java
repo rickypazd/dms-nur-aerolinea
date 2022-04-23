@@ -4,10 +4,17 @@ import Domain.Model.Aeronaves.*;
 import kernel.http.HttpStatus;
 import kernel.http.Exception.HttpException;
 import kernel.http.annotation.*;
+import kernel.mediator.Mediator;
 
 @RestController
 @RequestMapping("/aeronave")
 public class AeronaveApi {
+
+    private Mediator _mediator;
+
+    public AeronaveApi(Mediator mediator) {
+        this._mediator = mediator;
+    }
 
     @GetMapping("/")
     public List<Aeronave> getAll() {
@@ -19,8 +26,8 @@ public class AeronaveApi {
 
     @GetMapping("/{key}")
     public Aeronave getByKey(@PathVariable String key) throws HttpException {
-        if (key.equals("1")) {
-            throw new HttpException(HttpStatus.CONFLICT, "Not found");
+        if (key == null) {
+            throw new HttpException(HttpStatus.NOT_FOUND, "INTERNAL_SERVER_ERROR");
         }
         System.out.println("entro getByKey");
         return new Aeronave();

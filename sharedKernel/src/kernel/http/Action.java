@@ -4,10 +4,13 @@ import java.lang.annotation.Annotation;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Parameter;
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -17,6 +20,7 @@ import com.google.gson.Gson;
 
 import org.jboss.com.sun.net.httpserver.HttpExchange;
 
+import kernel.core.ApplicationContext;
 import kernel.http.Exception.HttpCodeException;
 import kernel.http.Exception.HttpException;
 import kernel.http.annotation.DeleteMapping;
@@ -25,6 +29,8 @@ import kernel.http.annotation.PathVariable;
 import kernel.http.annotation.PostMapping;
 import kernel.http.annotation.PutMapping;
 import kernel.http.annotation.RequestBody;
+import kernel.mediator.IMediator;
+import kernel.mediator.Request;
 
 public class Action {
     enum ActionType {
@@ -231,7 +237,36 @@ public class Action {
         if (type == boolean.class) {
             return Boolean.parseBoolean(value.toString());
         }
+        if (type == Date.class) {
+            return new Date(Long.parseLong(value.toString()));
+        }
+        if (type == BigDecimal.class) {
+            return new BigDecimal(value.toString());
+        }
+        if (type == BigInteger.class) {
+            return new BigInteger(value.toString());
+        }
+        if (type == byte[].class) {
+            return value.toString().getBytes();
+        }
+        if (type == Byte.class) {
+            return Byte.parseByte(value.toString());
+        }
+        Class[] i = type.getInterfaces();
+        if (i.length > 0) {
+            if (i[0].getName().equals("kernel.mediator.Request")) {
+                try {
+                    return type.getConstructor().newInstance();
+                } catch (InstantiationException | IllegalAccessException | IllegalArgumentException
+                        | InvocationTargetException | NoSuchMethodException | SecurityException e) {
+                    e.printStackTrace();
+                }
+            }
+
+        }
+
         return new Gson().fromJson(value.toString(), type);
+
     }
 
     public Method getMethod() {

@@ -1,14 +1,18 @@
 package kernel.http;
 
 import java.lang.annotation.Annotation;
+import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 
 import org.jboss.com.sun.net.httpserver.HttpExchange;
 
+import kernel.core.ApplicationContext;
 import kernel.http.Exception.HttpCodeException;
 import kernel.http.annotation.RequestMapping;
 import kernel.http.annotation.RestController;
+import kernel.mediator.Mediator;
+import kernel.mediator.IMediator;
 
 public class Controller {
     private String route;
@@ -39,7 +43,7 @@ public class Controller {
             try {
                 action = new Action(method);
             } catch (HttpCodeException e) {
-                
+
             }
             if (action == null) {
                 continue;
@@ -68,7 +72,9 @@ public class Controller {
             var exito = false;
             for (Action action : actions) {
                 if (action.equal(requestMethod, path)) {
-                    action.onMessage(t, response, path, data, this.controller.getConstructor().newInstance());
+                    Constructor<?> cos = this.controller.getConstructor(new Class[] { Mediator.class });
+                    IMediator m = new IMediator(this.controller);
+                    action.onMessage(t, response, path, data, cos.newInstance(m));
                     exito = true;
                     break;
                 }
