@@ -43,7 +43,6 @@ public class Controller {
             try {
                 action = new Action(method);
             } catch (HttpCodeException e) {
-
             }
             if (action == null) {
                 continue;
@@ -85,7 +84,7 @@ public class Controller {
                 return;
             }
         } catch (Exception e) {
-            throw new RuntimeException("Fail to create instance of " + this.controller.getName());
+            e.printStackTrace();
         }
 
     }

@@ -158,6 +158,7 @@ public class Action {
             response.setCode(HttpStatus.OK);
             response.setBody(resp.toString());
         } catch (Exception e) {
+            System.err.println(e.getMessage());
             if (e.getCause() instanceof HttpException) {
                 HttpException ex = (HttpException) e.getCause();
                 response.setCode(ex.getCode());

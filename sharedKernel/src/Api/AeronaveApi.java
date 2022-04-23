@@ -1,3 +1,5 @@
+package Api;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -37,7 +39,7 @@ public class AeronaveApi {
     }
 
     @PostMapping("/registro")
-    public Response<UUID> register(@PathVariable CrearAeronaveCommand aeronave) {
+    public Response<UUID> register(@RequestBody CrearAeronaveCommand aeronave) {
         Response<UUID> key = _mediator.send(aeronave);
         // aeronave.agregarAsiento(new Asiento(aeronave.getKey(), 1, "primera"));
         // aeronave.agregarAsiento(new Asiento(aeronave.getKey(), 2, "primera"));

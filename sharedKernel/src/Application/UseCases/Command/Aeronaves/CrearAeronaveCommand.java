@@ -8,6 +8,10 @@ import kernel.mediator.Request;
 
 public class CrearAeronaveCommand implements Request<UUID> {
 
+    public CrearAeronaveCommand() {
+        System.out.println("entro");
+    }
+
     public CrearAeronaveCommand(List<AsientoDto> asientos) {
         this.asientos = asientos;
     }
