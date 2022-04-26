@@ -2,13 +2,11 @@ package Api;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 import Application.Dto.AeronaveDto;
 import Application.UseCases.Command.Aeronaves.CrearAeronaveCommand;
 import Application.UseCases.Queries.Aeronaves.GetAeronaveByKeyQuery;
 import Domain.Model.Aeronaves.*;
-import kernel.http.HttpStatus;
 import kernel.http.Exception.HttpException;
 import kernel.http.annotation.*;
 import kernel.mediator.Mediator;
@@ -27,23 +25,19 @@ public class AeronaveApi {
     @GetMapping("/")
     public List<Aeronave> getAll() {
         List<Aeronave> aeronaves = new ArrayList<>();
-        aeronaves.add(new Aeronave());
-        aeronaves.add(new Aeronave());
+        // aeronaves.add(new Aeronave());
+        // aeronaves.add(new Aeronave());
         return aeronaves;
     }
 
     @GetMapping("/{key}")
-    public AeronaveDto getByKey(@PathVariable GetAeronaveByKeyQuery request) throws HttpException {
-        AeronaveDto aeronaveDto = _mediator.send(request).data;
-        return aeronaveDto;
+    public Response<AeronaveDto> getByKey(@PathVariable GetAeronaveByKeyQuery request) throws HttpException {
+        return _mediator.send(request);
     }
 
     @PostMapping("/registro")
-    public Response<UUID> register(@RequestBody CrearAeronaveCommand aeronave) {
-        Response<UUID> key = _mediator.send(aeronave);
-        // aeronave.agregarAsiento(new Asiento(aeronave.getKey(), 1, "primera"));
-        // aeronave.agregarAsiento(new Asiento(aeronave.getKey(), 2, "primera"));
-        return key;
+    public Response<Aeronave> register(@RequestBody CrearAeronaveCommand aeronave) {
+        return _mediator.send(aeronave);
     }
 
     @PutMapping("/{key}")

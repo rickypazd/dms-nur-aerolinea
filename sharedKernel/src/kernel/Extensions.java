@@ -7,6 +7,7 @@ public class Extensions {
             kernel.core.Entity.class,
             kernel.core.ValueObject.class,
             kernel.core.BussinessRuleValidateExeption.class,
+            kernel.core.IRepository.class,
             // http
             kernel.http.Rest.class,
             // rule
@@ -19,5 +20,7 @@ public class Extensions {
             kernel.mediator.Notification.class,
             kernel.mediator.Request.class,
             kernel.mediator.Response.class,
+            // Class
+            kernel.IServiceCollection.class,
     };
 }

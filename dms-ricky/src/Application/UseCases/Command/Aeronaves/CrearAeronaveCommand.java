@@ -3,18 +3,18 @@ package Application.UseCases.Command.Aeronaves;
 import java.util.List;
 import java.util.UUID;
 
+import Application.Dto.AeronaveDto;
 import Application.Dto.AsientoDto;
 import kernel.mediator.Request;
 
-public class CrearAeronaveCommand implements Request<UUID> {
+public class CrearAeronaveCommand implements Request<AeronaveDto> {
 
-    public CrearAeronaveCommand() {
-        System.out.println("entro");
+
+    public CrearAeronaveCommand(AeronaveDto ero) {
+        this.matricula = ero.matricula;
     }
 
-    public CrearAeronaveCommand(List<AsientoDto> asientos) {
-        this.asientos = asientos;
-    }
+    public String matricula;
 
     public List<AsientoDto> asientos;
 

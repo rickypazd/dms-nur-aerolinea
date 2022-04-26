@@ -7,6 +7,7 @@ import com.google.gson.Gson;
 
 public class AeronaveDto {
 
+    public String matricula;
     public List<AsientoDto> asientos;
 
     public AeronaveDto() {
