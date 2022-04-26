@@ -1,17 +1,23 @@
 package Application.UseCases.Command.Aeronaves;
 
 import java.util.UUID;
+
+import Domain.Factories.IAeronaveFactory;
+import Domain.Model.Aeronaves.Aeronave;
 import kernel.mediator.RequestHandler;
 
-public class CrearAeronaveHandler implements RequestHandler<CrearAeronaveCommand, UUID> {
+public class CrearAeronaveHandler implements RequestHandler<CrearAeronaveCommand, Aeronave> {
 
-    public CrearAeronaveHandler(){
+    private IAeronaveFactory _aeronaveFactory;
 
+    public CrearAeronaveHandler(IAeronaveFactory aeronaveFactory) {
+        this._aeronaveFactory = aeronaveFactory;
     }
+
     @Override
-    public UUID handle(CrearAeronaveCommand request) {
-        System.out.println("Entro al handler");
-        return UUID.randomUUID();
+    public Aeronave handle(CrearAeronaveCommand request) {
+        Aeronave aeronaveDto = _aeronaveFactory.Create(request.matricula);
+        return aeronaveDto;
     }
 
 }

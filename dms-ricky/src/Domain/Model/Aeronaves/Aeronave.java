@@ -10,12 +10,13 @@ import kernel.core.AggregateRoot;
 
 public class Aeronave extends AggregateRoot<UUID> {
 
-    public String placa;
+    public String matricula;
 
     private List<Asiento> asientos;
 
-    public Aeronave() {
+    public Aeronave(String matricula) {
         key = UUID.randomUUID();
+        this.matricula = matricula;
         asientos = new ArrayList<Asiento>();
     }
 
