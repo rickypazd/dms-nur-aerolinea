@@ -1,19 +1,19 @@
 package kernel.core;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 public abstract class DomainEvent {
 
-    public Date OcurredOn;
+    public LocalDateTime OcurredOn;
     public UUID Key;
 
-    protected DomainEvent(Date ocurredOn) {
+    protected DomainEvent(LocalDateTime ocurredOn) {
         this.OcurredOn = ocurredOn;
         this.Key = UUID.randomUUID();
     }
 
-    public Date getOcurredOn() {
+    public LocalDateTime getOcurredOn() {
         return OcurredOn;
     }
 

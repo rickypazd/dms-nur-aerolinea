@@ -14,7 +14,7 @@ public class App {
     public static void main(String[] args) throws Exception {
 
         IMediator.registerHandler(GetAeronaveByKeyHandler.class);
-        IMediator.registerHandler(CrearAeronaveHandler.class);
+        IMediator.registerHandler(CrearAeronaveHandler.class); 
 
         // Add transient dependencies
         IServiceCollection.AddTransient(IAeronaveFactory.class, AeronaveFactory.class);
