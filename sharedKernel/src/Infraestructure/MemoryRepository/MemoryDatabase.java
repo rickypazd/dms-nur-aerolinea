@@ -7,16 +7,6 @@ import Domain.Model.Aeronaves.Aeronave;
 
 public class MemoryDatabase {
 
-    ////DIFERENTE AL INGE
-    private static MemoryDatabase _instace;
-
-    public static MemoryDatabase getInstance() {
-        if (_instace == null) {
-            _instace = new MemoryDatabase();
-        }
-        return _instace;
-    }
-    //END
     
     private List<Aeronave> _aeronaves;
 

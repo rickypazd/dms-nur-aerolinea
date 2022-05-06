@@ -4,7 +4,7 @@ import Application.UseCases.Command.Aeronaves.CrearAeronaveHandler;
 import Application.UseCases.Queries.Aeronaves.GetAeronaveByKeyHandler;
 import Domain.Factories.AeronaveFactory;
 import Domain.Factories.IAeronaveFactory;
-import SharedKernel.IServiceCollection;
+import SharedKernel.extensions.IServiceCollection;
 import SharedKernel.mediator.IMediator;
 
 public class Extensions {

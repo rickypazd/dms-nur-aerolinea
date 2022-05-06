@@ -24,6 +24,7 @@ import SharedKernel.http.annotation.PathVariable;
 import SharedKernel.http.annotation.PostMapping;
 import SharedKernel.http.annotation.PutMapping;
 import SharedKernel.http.annotation.RequestBody;
+import SharedKernel.mediator.Request;
 
 public class Action {
     enum ActionType {
@@ -110,6 +111,7 @@ public class Action {
         return true;
     }
 
+    // instance es el Controller
     public void onMessage(HttpExchange t, Response response, String path, String data, Object instance) {
 
         Parameter[] parameters = this.method.getParameters();
@@ -214,7 +216,7 @@ public class Action {
         }
         Class[] i = type.getInterfaces();
         if (i.length > 0) {
-            if (i[0].getName().equals("kernel.mediator.Request")) {
+            if (i[0].getName().equals(Request.class.getName())) {
                 return createRequest(type, value);
             }
         }

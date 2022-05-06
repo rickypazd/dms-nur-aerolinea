@@ -21,7 +21,7 @@ public class Extensions {
             SharedKernel.mediator.Request.class,
             SharedKernel.mediator.Response.class,
             // Class
-            SharedKernel.IServiceCollection.class,
+            SharedKernel.extensions.IServiceCollection.class,
     };
 
     public static void AddKernel() {
