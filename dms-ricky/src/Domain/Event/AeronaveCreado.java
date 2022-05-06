@@ -3,7 +3,7 @@ package Domain.Event;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
-import kernel.core.DomainEvent;
+import SharedKernel.core.DomainEvent;
 
 public class AeronaveCreado extends DomainEvent {
 

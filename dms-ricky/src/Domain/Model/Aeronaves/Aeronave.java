@@ -8,20 +8,22 @@ import com.google.gson.Gson;
 
 import Domain.Event.AeronaveCreado;
 import Domain.Model.Aeronaves.ValueObjects.MatriculaAeronave;
-import kernel.core.AggregateRoot;
-import kernel.core.BussinessRuleValidateExeption;
-import kernel.http.Exception.HttpException;
+import SharedKernel.core.AggregateRoot;
+import SharedKernel.core.BussinessRuleValidateExeption;
+import SharedKernel.http.HttpStatus;
+import SharedKernel.http.Exception.HttpException;
 
 public class Aeronave extends AggregateRoot<UUID> {
 
-    public MatriculaAeronave matricula;
+    public String matricula;
     private List<Asiento> asientos;
 
     public Aeronave(String matricula) {
         key = UUID.randomUUID();
         try {
-            this.matricula = new MatriculaAeronave(matricula);
+            this.matricula = new MatriculaAeronave(matricula).toString();
         } catch (BussinessRuleValidateExeption e) {
+            e.printStackTrace();
             return;
         }
         asientos = new ArrayList<Asiento>();

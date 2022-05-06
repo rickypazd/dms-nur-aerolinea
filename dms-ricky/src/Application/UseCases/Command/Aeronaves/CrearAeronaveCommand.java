@@ -5,7 +5,7 @@ import java.util.UUID;
 
 import Application.Dto.AeronaveDto;
 import Application.Dto.AsientoDto;
-import kernel.mediator.Request;
+import SharedKernel.mediator.Request;
 
 public class CrearAeronaveCommand implements Request<AeronaveDto> {
 
