@@ -10,7 +10,8 @@ public class MemoryAeronaveRepository implements IAeronaveRepository {
     private MemoryDatabase _database;
 
     public MemoryAeronaveRepository() {
-        _database = MemoryDatabase.getInstance();
+        _database = MemoryDatabase.getInstance(); //Se remplazo esto por el singleton, ya que no se puede instanciar una clase estatica
+        //DIFERENTE AL INGE
     }
 
     @Override

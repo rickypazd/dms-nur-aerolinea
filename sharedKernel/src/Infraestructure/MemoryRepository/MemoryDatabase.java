@@ -7,6 +7,7 @@ import Domain.Model.Aeronaves.Aeronave;
 
 public class MemoryDatabase {
 
+    ////DIFERENTE AL INGE
     private static MemoryDatabase _instace;
 
     public static MemoryDatabase getInstance() {
@@ -15,7 +16,8 @@ public class MemoryDatabase {
         }
         return _instace;
     }
-
+    //END
+    
     private List<Aeronave> _aeronaves;
 
     public List<Aeronave> get_aeronaves() {
