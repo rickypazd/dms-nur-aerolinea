@@ -13,6 +13,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import org.jboss.com.sun.net.httpserver.HttpExchange;
 
@@ -219,7 +220,8 @@ public class Action {
                 return createRequest(type, value);
             }
         }
-        return new Gson().fromJson(value.toString(), type);
+        Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ").create();
+        return gson.fromJson(value.toString(), type);
 
     }
 
@@ -231,7 +233,8 @@ public class Action {
                 ArrayList<Object> values = new ArrayList<>();
                 Class[] paramTypes = constructor.getParameterTypes();
                 for (Class paramt : paramTypes) {
-                    values.add(new Gson().fromJson(value.toString(), paramt));
+                    Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ").create();
+                    values.add(gson.fromJson(value.toString(), paramt));
                 }
                 instance = constructor.newInstance(values.toArray());
                 return instance;

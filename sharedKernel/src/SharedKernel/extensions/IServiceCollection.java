@@ -2,6 +2,9 @@ package SharedKernel.extensions;
 
 import java.util.HashMap;
 
+import SharedKernel.mediator.IMediator;
+import SharedKernel.mediator.Mediator;
+
 public class IServiceCollection {
     private static HashMap<Class, Class> TrasientMap;
     private static HashMap<Class, Class> ScopedMap;
@@ -59,4 +62,7 @@ public class IServiceCollection {
         return getInstanceSingleton().get(in) == null ? null : getInstanceSingleton().get(in);
     }
 
+    public static void AddMediator() {
+        AddScoped(Mediator.class, IMediator.class);
+    }
 }

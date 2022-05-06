@@ -1,11 +1,8 @@
 package SharedKernel.mediator;
 
-import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
 import SharedKernel.extensions.DependencyInjection;
 
@@ -16,9 +13,9 @@ public class MediatorPlanRequest<T, E> {
     IMediator mediator;
 
     public MediatorPlanRequest(Class<?> handlerType, String handlerMethodName, Class<?> messageType,
-            Class context, IMediator mediator) throws NoSuchMethodException, SecurityException, ClassNotFoundException {
+            IMediator mediator) throws NoSuchMethodException, SecurityException, ClassNotFoundException {
         this.mediator = mediator;
-        handlerInstanceBuilder = getBean(handlerType, messageType, context);
+        handlerInstanceBuilder = getBean(handlerType, messageType);
         try {
             instance = DependencyInjection.createInstance(handlerInstanceBuilder, mediator);
         } catch (Exception e) {
@@ -27,11 +24,7 @@ public class MediatorPlanRequest<T, E> {
         handleMethod = handlerInstanceBuilder.getMethod(handlerMethodName, messageType);
     }
 
-    private Map<String, ?> getBeansOfType(Class context, Class<?> handlerType) {
-        return new HashMap<>();
-    }
-
-    private Class getBean(Class<?> handlerType, Class<?> messageType, Class context)
+    private Class getBean(Class<?> handlerType, Class<?> messageType)
             throws ClassNotFoundException {
         ArrayList<Class> mediators = IMediator.getHandlers();
         for (Class mediator : mediators) {

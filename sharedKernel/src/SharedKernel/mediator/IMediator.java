@@ -23,11 +23,10 @@ public class IMediator implements Mediator {
     }
 
     private HashMap<Class, Object> ScopedInstances;
-    private Class ctx;
 
-    public IMediator(Class ctx) {
-        this.ctx = ctx;
+    public IMediator() {
         ScopedInstances = new HashMap<Class, Object>();
+        ScopedInstances.put(Mediator.class, this);
     }
 
     public Object getScopedInstance(Class c) {
@@ -45,7 +44,7 @@ public class IMediator implements Mediator {
         try {
             plan = new MediatorPlanRequest<>(RequestHandler.class, "handle",
                     request.getClass(),
-                    ctx, this);
+                    this);
             response.data = plan.invoke(request);
 
         } catch (NoSuchMethodException | SecurityException | ClassNotFoundException | IllegalAccessException
@@ -58,20 +57,12 @@ public class IMediator implements Mediator {
     @Override
     public Response<Void> notify(Notification notification) {
         Response<Void> response = new Response<>();
-        List<NotificationHandler<Notification>> handlers = MediatorPlanNotify.getInstances(ctx,
-                notification.getClass());
-        List<Exception> exceptions = null;
-        for (NotificationHandler<Notification> handler : handlers) {
-            try {
-                handler.handle(notification);
-            } catch (Exception ex) {
-                if (exceptions == null)
-                    exceptions = new ArrayList<>();
-                exceptions.add(ex);
-            }
-        }
-        if (exceptions != null) {
-            response.exception = new AggregateException(exceptions);
+        MediatorPlanNotify plan;
+        try {
+            plan = new MediatorPlanNotify(NotificationHandler.class, "handle", notification.getClass(), this);
+            plan.invoke(notification);
+        } catch (Exception e) {
+            response.exception = (Exception) e;
         }
         return response;
     }

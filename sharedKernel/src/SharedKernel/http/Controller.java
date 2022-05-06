@@ -7,6 +7,7 @@ import java.util.ArrayList;
 
 import org.jboss.com.sun.net.httpserver.HttpExchange;
 
+import SharedKernel.extensions.DependencyInjection;
 import SharedKernel.http.Exception.HttpCodeException;
 import SharedKernel.http.annotation.RequestMapping;
 import SharedKernel.http.annotation.RestController;
@@ -71,7 +72,7 @@ public class Controller {
             for (Action action : actions) {
                 if (action.equal(requestMethod, path)) {
                     Constructor<?> cos = this.controller.getConstructor(new Class[] { Mediator.class });
-                    IMediator m = new IMediator(this.controller);
+                    IMediator m = new IMediator();
                     action.onMessage(t, response, path, data, cos.newInstance(m));
                     exito = true;
                     break;
