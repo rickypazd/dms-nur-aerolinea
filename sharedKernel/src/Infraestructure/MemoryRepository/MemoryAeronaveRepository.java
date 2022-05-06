@@ -9,8 +9,8 @@ public class MemoryAeronaveRepository implements IAeronaveRepository {
 
     private MemoryDatabase _database;
 
-    public MemoryAeronaveRepository(MemoryDatabase database) {
-        _database = database;
+    public MemoryAeronaveRepository() {
+        _database = MemoryDatabase.getInstance();
     }
 
     @Override
