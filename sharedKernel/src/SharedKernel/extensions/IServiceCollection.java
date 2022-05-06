@@ -49,7 +49,7 @@ public class IServiceCollection {
 
     public static void AddSingleton(Class in) {
         try {
-            getInstanceSingleton().put(in, DependencyInjection.createInstance(in));
+            getInstanceSingleton().put(in, DependencyInjection.createInstance(in, null));
         } catch (Exception e) {
             e.printStackTrace();
         }

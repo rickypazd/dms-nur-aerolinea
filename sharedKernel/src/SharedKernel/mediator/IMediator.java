@@ -2,6 +2,7 @@ package SharedKernel.mediator;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class IMediator implements Mediator {
@@ -21,10 +22,20 @@ public class IMediator implements Mediator {
         getHandlers().add(handler);
     }
 
+    private HashMap<Class, Object> ScopedInstances;
     private Class ctx;
 
     public IMediator(Class ctx) {
         this.ctx = ctx;
+        ScopedInstances = new HashMap<Class, Object>();
+    }
+
+    public Object getScopedInstance(Class c) {
+        return ScopedInstances.get(c);
+    }
+
+    public void setScopedInstance(Class c, Object instance) {
+        ScopedInstances.put(c, instance);
     }
 
     @Override
@@ -34,7 +45,7 @@ public class IMediator implements Mediator {
         try {
             plan = new MediatorPlanRequest<>(RequestHandler.class, "handle",
                     request.getClass(),
-                    ctx);
+                    ctx, this);
             response.data = plan.invoke(request);
 
         } catch (NoSuchMethodException | SecurityException | ClassNotFoundException | IllegalAccessException

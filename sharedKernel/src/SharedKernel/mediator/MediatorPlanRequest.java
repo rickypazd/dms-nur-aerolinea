@@ -13,12 +13,14 @@ public class MediatorPlanRequest<T, E> {
     Method handleMethod;
     Class handlerInstanceBuilder;
     Object instance;
+    IMediator mediator;
 
     public MediatorPlanRequest(Class<?> handlerType, String handlerMethodName, Class<?> messageType,
-            Class context) throws NoSuchMethodException, SecurityException, ClassNotFoundException {
+            Class context, IMediator mediator) throws NoSuchMethodException, SecurityException, ClassNotFoundException {
+        this.mediator = mediator;
         handlerInstanceBuilder = getBean(handlerType, messageType, context);
         try {
-            instance = DependencyInjection.createInstance(handlerInstanceBuilder);
+            instance = DependencyInjection.createInstance(handlerInstanceBuilder, mediator);
         } catch (Exception e) {
             e.printStackTrace();
         }

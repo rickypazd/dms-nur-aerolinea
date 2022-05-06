@@ -152,7 +152,6 @@ public class Action {
         Object resp;
         try {
             resp = invoke(instance, values.toArray());
-
             response.setCode(HttpStatus.OK);
             if (resp instanceof SharedKernel.mediator.Response) {
                 SharedKernel.mediator.Response r = (SharedKernel.mediator.Response) resp;
