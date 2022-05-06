@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Map;
 
 import kernel.IServiceCollection;
+import kernel.core.BussinessRuleValidateExeption;
 
 /**
  * Default implementation of Mediator
@@ -48,13 +49,16 @@ public class IMediator implements Mediator {
     @Override
     public <T, E> Response<E> send(Request<T> request) {
         Response<E> response = new Response<>();
+        MediatorPlanRequest<T, E> plan;
         try {
-            MediatorPlanRequest<T, E> plan = new MediatorPlanRequest<>(RequestHandler.class, "handle",
+            plan = new MediatorPlanRequest<>(RequestHandler.class, "handle",
                     request.getClass(),
                     ctx);
             response.data = plan.invoke(request);
-        } catch (Exception e) {
-            response.exception = e;
+
+        } catch (NoSuchMethodException | SecurityException | ClassNotFoundException | IllegalAccessException
+                | IllegalArgumentException | InvocationTargetException e) {
+            response.exception = (Exception) e;
         }
         return response;
     }

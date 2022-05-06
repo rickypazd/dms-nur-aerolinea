@@ -12,7 +12,7 @@ public class StringNotNullOrEmptyRule implements BussinessRule {
 
     @Override
     public boolean IsValid() {
-        if (_value != null || !_value.isEmpty()) {
+        if (_value != null && !_value.isEmpty()) {
             return true;
         }
         return false;

@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 
 public class Response<T> {
     public T data;
+    public int status;
     public Exception exception;
 
     public boolean hasException() {

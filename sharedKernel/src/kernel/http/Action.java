@@ -146,28 +146,39 @@ public class Action {
             values.add(null);
         }
 
+        // try {
+        Object resp;
         try {
-            Object resp = invoke(instance, values.toArray());
+            resp = invoke(instance, values.toArray());
+
             response.setCode(HttpStatus.OK);
-            response.setBody(resp.toString());
-        } catch (Exception e) {
-            System.err.println(e.getMessage());
-            if (e.getCause() instanceof HttpException) {
-                HttpException ex = (HttpException) e.getCause();
-                response.setCode(ex.getCode());
-                response.setBody(ex.getMessage());
+            if (resp instanceof kernel.mediator.Response) {
+                kernel.mediator.Response r = (kernel.mediator.Response) resp;
+                r.status = response.getCode();
+                response.setBody(r.toString());
             } else {
-                response.setCode(HttpStatus.INTERNAL_SERVER_ERROR);
-                response.setBody(e.getMessage());
+                response.setBody(resp.toString());
             }
+
+        } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException | HttpException e) {
+            kernel.mediator.Response r = new kernel.mediator.Response();
+            r.status = HttpStatus.INTERNAL_SERVER_ERROR;
+            r.data = e.getMessage();
+            response.setBody(r.toString());
+            e.printStackTrace();
         }
 
     }
 
     public Object invoke(Object instance, Object... arg)
             throws HttpException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
+        if (this.method == null) {
+            return null;
+        }
+        if (!this.method.trySetAccessible()) {
+            return null;
+        }
         return this.method.invoke(instance, arg);
-
     }
 
     public Object parseValue(Object value, Class<?> type) {

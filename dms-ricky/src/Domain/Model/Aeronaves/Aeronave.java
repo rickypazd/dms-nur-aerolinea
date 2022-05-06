@@ -6,18 +6,26 @@ import java.util.UUID;
 
 import com.google.gson.Gson;
 
+import Domain.Event.AeronaveCreado;
+import Domain.Model.Aeronaves.ValueObjects.MatriculaAeronave;
 import kernel.core.AggregateRoot;
+import kernel.core.BussinessRuleValidateExeption;
+import kernel.http.Exception.HttpException;
 
 public class Aeronave extends AggregateRoot<UUID> {
 
-    public String matricula;
-
+    public MatriculaAeronave matricula;
     private List<Asiento> asientos;
 
     public Aeronave(String matricula) {
         key = UUID.randomUUID();
-        this.matricula = matricula;
+        try {
+            this.matricula = new MatriculaAeronave(matricula);
+        } catch (BussinessRuleValidateExeption e) {
+            return;
+        }
         asientos = new ArrayList<Asiento>();
+        addDomainEvent(new AeronaveCreado(key, matricula));
     }
 
     public void agregarAsiento(Asiento asiento) {
@@ -29,7 +37,7 @@ public class Aeronave extends AggregateRoot<UUID> {
 
     @Override
     public String toString() {
-        return new Gson().toJson(this);
+        return new Gson().toJson(this, Aeronave.class);
     }
 
 }

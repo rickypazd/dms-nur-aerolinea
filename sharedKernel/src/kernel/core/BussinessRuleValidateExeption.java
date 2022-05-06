@@ -1,6 +1,8 @@
 package kernel.core;
 
-public class BussinessRuleValidateExeption extends Exception {
+import java.io.Serializable;
+
+public class BussinessRuleValidateExeption extends Exception implements Serializable {
 
     public BussinessRule BrokenRule;
     public String Details;
