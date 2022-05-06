@@ -15,13 +15,13 @@ import kernel.http.HttpStatus;
 
 public class Aeronave extends AggregateRoot<UUID> {
 
-    public MatriculaAeronave matricula;
+    public String matricula;
     private List<Asiento> asientos;
 
     public Aeronave(String matricula) {
         key = UUID.randomUUID();
         try {
-            this.matricula = new MatriculaAeronave(matricula);
+            this.matricula = new MatriculaAeronave(matricula).toString();
         } catch (BussinessRuleValidateExeption e) {
             e.printStackTrace();
             return;

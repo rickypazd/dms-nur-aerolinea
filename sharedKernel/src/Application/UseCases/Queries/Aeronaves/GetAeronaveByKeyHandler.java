@@ -3,17 +3,29 @@ package Application.UseCases.Queries.Aeronaves;
 import java.util.UUID;
 
 import Application.Dto.AeronaveDto;
+import Domain.Model.Aeronaves.Aeronave;
+import Domain.Repositories.IAeronaveRepository;
+import kernel.http.HttpStatus;
+import kernel.http.Exception.HttpException;
 import kernel.mediator.RequestHandler;
 
 public class GetAeronaveByKeyHandler implements RequestHandler<GetAeronaveByKeyQuery, AeronaveDto> {
 
-    public GetAeronaveByKeyHandler() {
+    private IAeronaveRepository _aeronaveRepository;
 
+    public GetAeronaveByKeyHandler(IAeronaveRepository aeronaveRepository) {
+        this._aeronaveRepository = aeronaveRepository;
     }
 
     @Override
     public AeronaveDto handle(GetAeronaveByKeyQuery request) {
-        System.out.println("Entro al handler");
-        return new AeronaveDto();
+        System.out.println(request.key);
+        Aeronave aeronave = _aeronaveRepository.FindByKey(request.key);
+        if(aeronave == null) {
+            return null;
+        }
+        AeronaveDto aeronaveDto = new AeronaveDto();
+        aeronaveDto.matricula = aeronave.matricula;
+        return aeronaveDto;
     }
 }

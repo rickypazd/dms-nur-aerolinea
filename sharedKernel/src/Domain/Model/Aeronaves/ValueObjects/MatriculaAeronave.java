@@ -11,5 +11,8 @@ public class MatriculaAeronave extends ValueObject {
         CheckRule(new StringNotNullOrEmptyRule(Value));
         this.value = Value;
     }
-
+    @Override
+    public String toString() {
+        return value;
+    }
 }

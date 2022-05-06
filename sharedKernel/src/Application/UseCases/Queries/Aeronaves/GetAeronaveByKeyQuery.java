@@ -9,9 +9,9 @@ import kernel.mediator.Request;
 
 public class GetAeronaveByKeyQuery implements Request<AeronaveDto> {
 
-    public GetAeronaveByKeyQuery() {
-        // System.out.println("ASdasd");
-    }
+    // public GetAeronaveByKeyQuery() {
+    //     // System.out.println("ASdasd");
+    // }
 
     public GetAeronaveByKeyQuery(UUID key) {
         this.key = key;
