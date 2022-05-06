@@ -5,19 +5,22 @@ import java.util.UUID;
 import Domain.Factories.IAeronaveFactory;
 import Domain.Model.Aeronaves.Aeronave;
 import Domain.Repositories.IAeronaveRepository;
-import kernel.core.BussinessRuleValidateExeption;
-import kernel.http.HttpStatus;
-import kernel.http.Exception.HttpException;
-import kernel.mediator.RequestHandler;
+import Domain.Repositories.IUnitOfWork;
+import SharedKernel.core.BussinessRuleValidateExeption;
+import SharedKernel.http.HttpStatus;
+import SharedKernel.http.Exception.HttpException;
+import SharedKernel.mediator.RequestHandler;
 
 public class CrearAeronaveHandler implements RequestHandler<CrearAeronaveCommand, Aeronave> {
 
     private IAeronaveFactory _aeronaveFactory;
     private IAeronaveRepository _aeronaveRepository;
+    private IUnitOfWork _unitOfWork;
 
-    public CrearAeronaveHandler(IAeronaveFactory aeronaveFactory, IAeronaveRepository aeronaveRepository) {
+    public CrearAeronaveHandler(IAeronaveFactory aeronaveFactory, IAeronaveRepository aeronaveRepository, IUnitOfWork unitOfWork) {
         this._aeronaveFactory = aeronaveFactory;
         this._aeronaveRepository = aeronaveRepository;
+        this._unitOfWork = unitOfWork;
     }
 
     @Override
@@ -25,6 +28,7 @@ public class CrearAeronaveHandler implements RequestHandler<CrearAeronaveCommand
         Aeronave aeronaveDto;
         aeronaveDto = _aeronaveFactory.Create(request.matricula);
         _aeronaveRepository.Create(aeronaveDto);
+        _unitOfWork.commit();
         return aeronaveDto;
 
     }

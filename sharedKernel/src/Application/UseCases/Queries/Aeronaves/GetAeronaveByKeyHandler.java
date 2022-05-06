@@ -5,9 +5,9 @@ import java.util.UUID;
 import Application.Dto.AeronaveDto;
 import Domain.Model.Aeronaves.Aeronave;
 import Domain.Repositories.IAeronaveRepository;
-import kernel.http.HttpStatus;
-import kernel.http.Exception.HttpException;
-import kernel.mediator.RequestHandler;
+import SharedKernel.http.HttpStatus;
+import SharedKernel.http.Exception.HttpException;
+import SharedKernel.mediator.RequestHandler;
 
 public class GetAeronaveByKeyHandler implements RequestHandler<GetAeronaveByKeyQuery, AeronaveDto> {
 

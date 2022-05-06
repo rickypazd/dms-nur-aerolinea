@@ -2,7 +2,7 @@ package Domain.Model.Aeronaves;
 
 import java.util.UUID;
 
-import kernel.core.Entity;
+import SharedKernel.core.Entity;
 
 public class Asiento extends Entity<UUID> {
 
