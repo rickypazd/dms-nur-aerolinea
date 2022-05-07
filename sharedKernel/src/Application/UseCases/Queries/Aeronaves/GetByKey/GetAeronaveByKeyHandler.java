@@ -18,7 +18,6 @@ public class GetAeronaveByKeyHandler implements RequestHandler<GetAeronaveByKeyQ
 
     @Override
     public AeronaveDto handle(GetAeronaveByKeyQuery request) throws HttpException {
-        System.out.println(request.key);
         Aeronave aeronave = _aeronaveRepository.FindByKey(request.key);
         if (aeronave == null) {
             throw new HttpException(HttpStatus.BAD_REQUEST, "Aeronave no encontrada");

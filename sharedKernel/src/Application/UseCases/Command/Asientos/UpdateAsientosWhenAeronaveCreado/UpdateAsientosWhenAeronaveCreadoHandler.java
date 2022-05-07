@@ -16,7 +16,7 @@ public class UpdateAsientosWhenAeronaveCreadoHandler implements NotificationHand
 
     @Override
     public void handle(Notification notification) {
-        System.out.println(notification);
+        // System.out.println(notification);
 
     }
 

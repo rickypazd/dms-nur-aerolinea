@@ -30,7 +30,6 @@ public abstract class DbContext implements IDbContext {
         for (Field field : fields) {
             if (field.getType().getName().contains(SharedKernel.db.DbSet.class.getName())) {
                 
-                System.out.println(field.getName());
                 try {
                     field.set(this, new DbSet<>(this, field));
                     _dbSets.add((DbSet) field.get(this));
