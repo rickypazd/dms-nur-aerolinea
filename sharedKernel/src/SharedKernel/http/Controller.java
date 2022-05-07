@@ -2,6 +2,7 @@ package SharedKernel.http;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 
@@ -9,6 +10,7 @@ import org.jboss.com.sun.net.httpserver.HttpExchange;
 
 import SharedKernel.extensions.DependencyInjection;
 import SharedKernel.http.Exception.HttpCodeException;
+import SharedKernel.http.Exception.HttpException;
 import SharedKernel.http.annotation.RequestMapping;
 import SharedKernel.http.annotation.RestController;
 import SharedKernel.mediator.IMediator;
@@ -58,33 +60,31 @@ public class Controller {
         return route;
     }
 
-    public void onMessage(HttpExchange t, String data, Response response) {
-        try {
-            String path = t.getRequestURI().getPath();
-            path = path.split("\\?")[0];
-            path = path.substring(path.indexOf(route) + route.length());
-            Method method = null;
-            String requestMethod = t.getRequestMethod();
-            if (path.length() == 0) {
-                path = "/";
+    public void onMessage(HttpExchange t, String data, Response response)
+            throws InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException,
+            NoSuchMethodException, SecurityException, HttpException {
+        String path = t.getRequestURI().getPath();
+        path = path.split("\\?")[0];
+        path = path.substring(path.indexOf(route) + route.length());
+        Method method = null;
+        String requestMethod = t.getRequestMethod();
+        if (path.length() == 0) {
+            path = "/";
+        }
+        var exito = false;
+        for (Action action : actions) {
+            if (action.equal(requestMethod, path)) {
+                Constructor<?> cos = this.controller.getConstructor(new Class[] { Mediator.class });
+                IMediator m = new IMediator();
+                action.onMessage(t, response, path, data, cos.newInstance(m));
+                exito = true;
+                break;
             }
-            var exito = false;
-            for (Action action : actions) {
-                if (action.equal(requestMethod, path)) {
-                    Constructor<?> cos = this.controller.getConstructor(new Class[] { Mediator.class });
-                    IMediator m = new IMediator();
-                    action.onMessage(t, response, path, data, cos.newInstance(m));
-                    exito = true;
-                    break;
-                }
-            }
-            if (!exito) {
-                response.setCode(HttpStatus.BAD_GATEWAY);
-                response.setBody("Method not found");
-                return;
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
+        }
+        if (!exito) {
+            response.setCode(HttpStatus.BAD_GATEWAY);
+            response.setBody("Method not found");
+            return;
         }
 
     }

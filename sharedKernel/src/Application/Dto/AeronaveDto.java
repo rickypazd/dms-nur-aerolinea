@@ -1,14 +1,13 @@
 package Application.Dto;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 public class AeronaveDto {
 
+    public UUID key;
     public String matricula;
-    public String perro;
-    public Date fecha_test;
     public List<AsientoDto> asientos;
 
     public AeronaveDto() {

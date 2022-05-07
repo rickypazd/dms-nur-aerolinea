@@ -3,10 +3,14 @@ package SharedKernel.http;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.lang.reflect.InvocationTargetException;
 import java.net.InetSocketAddress;
 import java.util.HashMap;
 
 import org.jboss.com.sun.net.httpserver.HttpServer;
+
+import SharedKernel.http.Exception.HttpException;
+
 import org.jboss.com.sun.net.httpserver.HttpContext;
 import org.jboss.com.sun.net.httpserver.HttpExchange;
 
@@ -30,6 +34,7 @@ public abstract class Rest {
     public static void start() {
         start(80);
     }
+
     public static void start(int port) {
         HttpServer server;
         System.setProperty("org.eclipse.jetty.util.log.class", "org.eclipse.jetty.util.log.StdErrLog");
@@ -77,6 +82,17 @@ public abstract class Rest {
             response.setBody("Controller not found");
             return;
         }
-        controller.onMessage(t, data, response);
+        try {
+            controller.onMessage(t, data, response);
+        } catch (InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException
+                | NoSuchMethodException | SecurityException | HttpException e) {
+            if (e.getCause() instanceof HttpException) {
+                response.setCode(((HttpException) e.getCause()).getCode());
+                response.setBody(((HttpException) e.getCause()).getMessage());
+            } else {
+                response.setBody("Internal server error");
+                response.setCode(HttpStatus.INTERNAL_SERVER_ERROR);
+            }
+        }
     }
 }

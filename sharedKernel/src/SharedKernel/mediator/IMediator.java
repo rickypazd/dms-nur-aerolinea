@@ -5,6 +5,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import SharedKernel.http.HttpStatus;
+import SharedKernel.http.Exception.HttpException;
+
 public class IMediator implements Mediator {
     private static ArrayList<Class> handlerClass;
 
@@ -38,7 +41,8 @@ public class IMediator implements Mediator {
     }
 
     @Override
-    public <T, E> Response<E> send(Request<T> request) {
+    public <T, E> Response<E> send(Request<T> request)
+            throws HttpException {
         Response<E> response = new Response<>();
         MediatorPlanRequest<T, E> plan;
         try {
@@ -47,9 +51,14 @@ public class IMediator implements Mediator {
                     this);
             response.data = plan.invoke(request);
 
-        } catch (Exception e) {
-            e.printStackTrace();
-            // response.exception = (Exception) e;
+        } catch (NoSuchMethodException | SecurityException | ClassNotFoundException | IllegalAccessException
+                | IllegalArgumentException | InvocationTargetException e) {
+            if (e.getCause() instanceof HttpException) {
+                throw (HttpException) e.getCause();
+            }
+            throw new HttpException(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage());
+        } catch (HttpException e) {
+            throw e;
         }
         return response;
     }

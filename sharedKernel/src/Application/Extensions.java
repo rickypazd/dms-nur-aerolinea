@@ -1,6 +1,8 @@
 package Application;
 
-import Application.UseCases.Command.Aeronaves.CrearAeronaveHandler;
+import Application.UseCases.Command.Aeronaves.Crear.CrearAeronaveHandler;
+import Application.UseCases.Command.Aeronaves.Eliminar.EliminarAeronaveCommand;
+import Application.UseCases.Command.Aeronaves.Eliminar.EliminarAeronaveHandler;
 import Application.UseCases.Queries.Aeronaves.GetAll.GetAllAeronaveHandler;
 import Application.UseCases.Queries.Aeronaves.GetByKey.GetAeronaveByKeyHandler;
 import Domain.Factories.AeronaveFactory;
@@ -15,6 +17,7 @@ public class Extensions {
         IMediator.registerHandler(GetAllAeronaveHandler.class);
         IMediator.registerHandler(GetAeronaveByKeyHandler.class);
         IMediator.registerHandler(CrearAeronaveHandler.class);
+        IMediator.registerHandler(EliminarAeronaveHandler.class);
         // IMediator.registerHandler(UpdateAsientosWhenAeronaveCreadoHandler.class);
         IServiceCollection.AddTransient(IAeronaveFactory.class, AeronaveFactory.class);
     }

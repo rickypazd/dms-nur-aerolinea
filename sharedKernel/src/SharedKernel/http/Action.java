@@ -111,45 +111,43 @@ public class Action {
     }
 
     // instance es el Controller
-    public void onMessage(HttpExchange t, Response response, String path, String data, Object instance) {
+    public void onMessage(HttpExchange t, Response response, String path, String data, Object instance) throws IllegalAccessException, IllegalArgumentException, InvocationTargetException, HttpException {
+            Parameter[] parameters = this.method.getParameters();
+            // Class[] paramTypes = this.method.getParameterTypes();
+            ArrayList<Object> values = new ArrayList<Object>();
+            int i_p_v = -1;
 
-        Parameter[] parameters = this.method.getParameters();
-        // Class[] paramTypes = this.method.getParameterTypes();
-        ArrayList<Object> values = new ArrayList<Object>();
-        int i_p_v = -1;
+            String[] arrp = this.route.split("/");
+            ArrayList<String> lis = new ArrayList<>();
+            for (String s : arrp) {
+                lis.add(s);
+            }
 
-        String[] arrp = this.route.split("/");
-        ArrayList<String> lis = new ArrayList<>();
-        for (String s : arrp) {
-            lis.add(s);
-        }
+            for (Parameter parameter : parameters) {
+                Object value = null;
+                Annotation annotation = parameter.getAnnotation(PathVariable.class);
+                if (annotation instanceof PathVariable) {
+                    i_p_v++;
 
-        for (Parameter parameter : parameters) {
-            Object value = null;
-            Annotation annotation = parameter.getAnnotation(PathVariable.class);
-            if (annotation instanceof PathVariable) {
-                i_p_v++;
-
-                int i = lis.indexOf("{" + this.params.get(i_p_v) + "}");
-                if (i == -1) {
-                    throw new RuntimeException("No se encontro el parametro " + this.params.get(i_p_v));
+                    int i = lis.indexOf("{" + this.params.get(i_p_v) + "}");
+                    if (i == -1) {
+                        throw new RuntimeException("No se encontro el parametro " + this.params.get(i_p_v));
+                    }
+                    value = path.split("/")[i];
+                    values.add(parseValue(value, parameter.getType()));
+                    continue;
                 }
-                value = path.split("/")[i];
-                values.add(parseValue(value, parameter.getType()));
-                continue;
-            }
-            annotation = parameter.getAnnotation(RequestBody.class);
-            if (annotation instanceof RequestBody) {
-                values.add(parseValue(data, parameter.getType()));
-                continue;
+                annotation = parameter.getAnnotation(RequestBody.class);
+                if (annotation instanceof RequestBody) {
+                    values.add(parseValue(data, parameter.getType()));
+                    continue;
+                }
+
+                values.add(null);
             }
 
-            values.add(null);
-        }
-
-        // try {
-        Object resp;
-        try {
+            // try {
+            Object resp;
             resp = invoke(instance, values.toArray());
             response.setCode(HttpStatus.OK);
             if (resp instanceof SharedKernel.mediator.Response) {
@@ -160,13 +158,7 @@ public class Action {
                 response.setBody(resp.toString());
             }
 
-        } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException | HttpException e) {
-            SharedKernel.mediator.Response r = new SharedKernel.mediator.Response();
-            r.status = HttpStatus.INTERNAL_SERVER_ERROR;
-            r.data = e.getMessage();
-            response.setBody(r.toString());
-            e.printStackTrace();
-        }
+     
 
     }
 
@@ -230,7 +222,7 @@ public class Action {
                 ArrayList<Object> values = new ArrayList<>();
                 Class[] paramTypes = constructor.getParameterTypes();
                 for (Class paramt : paramTypes) {
-                    
+
                     values.add(JSON.getInstance().fromJson(value.toString(), paramt));
                 }
                 instance = constructor.newInstance(values.toArray());

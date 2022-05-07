@@ -1,4 +1,4 @@
-package Application.UseCases.Command.Aeronaves;
+package Application.UseCases.Command.Aeronaves.Crear;
 
 import java.util.List;
 import java.util.UUID;

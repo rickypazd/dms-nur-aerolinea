@@ -4,7 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import Application.Dto.AeronaveDto;
-import Application.UseCases.Command.Aeronaves.CrearAeronaveCommand;
+import Application.UseCases.Command.Aeronaves.Crear.CrearAeronaveCommand;
+import Application.UseCases.Command.Aeronaves.Eliminar.EliminarAeronaveCommand;
 import Application.UseCases.Queries.Aeronaves.GetAll.GetAllAeronaveQuery;
 import Application.UseCases.Queries.Aeronaves.GetByKey.GetAeronaveByKeyQuery;
 import Domain.Model.Aeronaves.*;
@@ -25,7 +26,7 @@ public class AeronaveController {
     }
 
     @GetMapping("/")
-    public Response<List<Aeronave>> getAll() {
+    public Response<List<Aeronave>> getAll() throws HttpException {
         return _mediator.send(new GetAllAeronaveQuery());
     }
 
@@ -35,7 +36,7 @@ public class AeronaveController {
     }
 
     @PostMapping("/registro")
-    public Response<Aeronave> register(@RequestBody CrearAeronaveCommand aeronave) {
+    public Response<Aeronave> register(@RequestBody CrearAeronaveCommand aeronave) throws HttpException {
         return _mediator.send(aeronave);
     }
 
@@ -45,7 +46,7 @@ public class AeronaveController {
     }
 
     @DeleteMapping("/{key}")
-    public void delete(@PathVariable String key) {
-        System.out.println("entro delete");
+    public Response<Aeronave> delete(@PathVariable EliminarAeronaveCommand request) throws HttpException {
+        return _mediator.send(request);
     }
 }

@@ -5,6 +5,7 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 
 import SharedKernel.extensions.DependencyInjection;
+import SharedKernel.http.Exception.HttpException;
 
 public class MediatorPlanRequest<T, E> {
     Method handleMethod;
@@ -42,7 +43,7 @@ public class MediatorPlanRequest<T, E> {
     }
 
     public E invoke(Request<T> request)
-            throws IllegalAccessException, IllegalArgumentException, InvocationTargetException {
+            throws IllegalAccessException, IllegalArgumentException, InvocationTargetException, HttpException {
         return (E) handleMethod.invoke(instance, request);
     }
 }

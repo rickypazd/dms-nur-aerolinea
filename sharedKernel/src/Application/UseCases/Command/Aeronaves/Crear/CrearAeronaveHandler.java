@@ -1,13 +1,9 @@
-package Application.UseCases.Command.Aeronaves;
-
-import java.util.UUID;
+package Application.UseCases.Command.Aeronaves.Crear;
 
 import Domain.Factories.IAeronaveFactory;
 import Domain.Model.Aeronaves.Aeronave;
 import Domain.Repositories.IAeronaveRepository;
 import Domain.Repositories.IUnitOfWork;
-import SharedKernel.core.BussinessRuleValidateExeption;
-import SharedKernel.http.HttpStatus;
 import SharedKernel.http.Exception.HttpException;
 import SharedKernel.mediator.RequestHandler;
 
@@ -25,7 +21,7 @@ public class CrearAeronaveHandler implements RequestHandler<CrearAeronaveCommand
     }
 
     @Override
-    public Aeronave handle(CrearAeronaveCommand request) {
+    public Aeronave handle(CrearAeronaveCommand request) throws HttpException {
         Aeronave aeronave = _aeronaveFactory.Create(request.matricula);
         aeronave.eventCreado();
 
