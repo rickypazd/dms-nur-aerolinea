@@ -5,11 +5,13 @@ import java.util.List;
 
 import Application.Dto.AeronaveDto;
 import Application.UseCases.Command.Aeronaves.CrearAeronaveCommand;
-import Application.UseCases.Queries.Aeronaves.GetAeronaveByKeyQuery;
+import Application.UseCases.Queries.Aeronaves.GetAll.GetAllAeronaveQuery;
+import Application.UseCases.Queries.Aeronaves.GetByKey.GetAeronaveByKeyQuery;
 import Domain.Model.Aeronaves.*;
 import SharedKernel.http.Exception.HttpException;
 import SharedKernel.http.annotation.*;
 import SharedKernel.mediator.Mediator;
+import SharedKernel.mediator.Request;
 import SharedKernel.mediator.Response;
 
 @RestController
@@ -23,11 +25,8 @@ public class AeronaveController {
     }
 
     @GetMapping("/")
-    public List<Aeronave> getAll() {
-        List<Aeronave> aeronaves = new ArrayList<>();
-        // aeronaves.add(new Aeronave());
-        // aeronaves.add(new Aeronave());
-        return aeronaves;
+    public Response<List<Aeronave>> getAll() {
+        return _mediator.send(new GetAllAeronaveQuery());
     }
 
     @GetMapping("/{key}")

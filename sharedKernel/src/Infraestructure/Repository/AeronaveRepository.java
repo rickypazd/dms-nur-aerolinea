@@ -1,5 +1,6 @@
 package Infraestructure.Repository;
 
+import java.util.List;
 import java.util.UUID;
 
 import Domain.Model.Aeronaves.Aeronave;
@@ -23,6 +24,11 @@ public class AeronaveRepository implements IAeronaveRepository {
     @Override
     public void Create(Aeronave obj) {
         _aeronaves.Add(obj);
+    }
+
+    @Override
+    public List<Aeronave> GetAll() {
+        return _aeronaves.All();
     }
 
 }

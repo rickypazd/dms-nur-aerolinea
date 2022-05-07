@@ -1,4 +1,4 @@
-package Application.UseCases.Queries.Aeronaves;
+package Application.UseCases.Queries.Aeronaves.GetByKey;
 
 import java.util.UUID;
 import Application.Dto.AeronaveDto;

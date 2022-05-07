@@ -66,6 +66,14 @@ public class DbSet<T> {
         return (T) _context.Single(fun, this);
     }
 
+    public List<T> All() {
+        return (List<T>) _context.All(this);
+    }
+
+    public List<T> Filter(BooleanFunction<T> fun) {
+        return (List<T>) _context.Filter(fun, this);
+    }
+
     @Override
     public String toString() {
         return "[DbSet: " + _name + "]";

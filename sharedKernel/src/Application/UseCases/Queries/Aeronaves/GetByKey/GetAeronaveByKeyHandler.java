@@ -1,13 +1,9 @@
-package Application.UseCases.Queries.Aeronaves;
-
-import java.util.UUID;
+package Application.UseCases.Queries.Aeronaves.GetByKey;
 
 import Application.Dto.AeronaveDto;
 import Application.Dto.AsientoDto;
 import Domain.Model.Aeronaves.Aeronave;
 import Domain.Repositories.IAeronaveRepository;
-import SharedKernel.http.HttpStatus;
-import SharedKernel.http.Exception.HttpException;
 import SharedKernel.mediator.RequestHandler;
 
 public class GetAeronaveByKeyHandler implements RequestHandler<GetAeronaveByKeyQuery, AeronaveDto> {
