@@ -5,16 +5,16 @@ import java.util.UUID;
 
 import SharedKernel.mediator.Notification;
 
-public abstract class DomainEvent implements Notification {
+public class DomainEvent implements Notification {
 
     public LocalDateTime OcurredOn;
     public UUID Key;
 
     public DomainEvent() {
-
+        
     }
 
-    protected DomainEvent(LocalDateTime ocurredOn) {
+    public DomainEvent(LocalDateTime ocurredOn) {
         this.OcurredOn = ocurredOn;
         this.Key = UUID.randomUUID();
     }

@@ -1,6 +1,7 @@
 package SharedKernel.mediator;
 
-import com.google.gson.Gson;
+
+import SharedKernel.JSON;
 
 public class Response<T> {
     public T data;
@@ -12,6 +13,6 @@ public class Response<T> {
     }
     @Override
     public String toString() {
-        return new Gson().toJson(this);
+        return JSON.getInstance().toJson(this);
     }
 }

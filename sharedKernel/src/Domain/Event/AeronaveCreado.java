@@ -10,6 +10,10 @@ public class AeronaveCreado extends DomainEvent {
     public UUID keyAeronave;
     public String matricula;
 
+    public AeronaveCreado() {
+        super();
+    }
+
     public AeronaveCreado(UUID keyAeronave, String matricula) {
         super(LocalDateTime.now());
         this.keyAeronave = keyAeronave;

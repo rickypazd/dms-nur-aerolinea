@@ -2,18 +2,19 @@ package SharedKernel.core;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 public abstract class Entity<TId> {
 
     public TId key;
-    private Collection<DomainEvent> domainEvents;
+    public List<DomainEvent> domainEvents;
     // private Collection<DomainEvent> DomainEvents;
 
-    public Collection<DomainEvent> getDomainEvents() {
+    public List<DomainEvent> getDomainEvents() {
         return domainEvents;
     }
 
-    protected Entity() {
+    public Entity() {
         domainEvents = new ArrayList<DomainEvent>();
     }
 

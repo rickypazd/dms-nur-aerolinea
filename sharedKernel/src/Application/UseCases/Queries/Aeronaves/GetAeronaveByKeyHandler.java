@@ -30,7 +30,6 @@ public class GetAeronaveByKeyHandler implements RequestHandler<GetAeronaveByKeyQ
         aeronave.asientos.iterator().forEachRemaining(obj -> {
             aeronaveDto.asientos.add(new AsientoDto(obj.key, obj.numero, obj.clase));
         });
-        // aeronaveDto.asientos = aeronave.asientos;
         return aeronaveDto;
     }
 }

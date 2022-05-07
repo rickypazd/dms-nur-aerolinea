@@ -12,11 +12,9 @@ import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-
 import org.jboss.com.sun.net.httpserver.HttpExchange;
 
+import SharedKernel.JSON;
 import SharedKernel.http.Exception.HttpCodeException;
 import SharedKernel.http.Exception.HttpException;
 import SharedKernel.http.annotation.DeleteMapping;
@@ -220,8 +218,7 @@ public class Action {
                 return createRequest(type, value);
             }
         }
-        Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ").create();
-        return gson.fromJson(value.toString(), type);
+        return JSON.getInstance().fromJson(value.toString(), type);
 
     }
 
@@ -233,8 +230,8 @@ public class Action {
                 ArrayList<Object> values = new ArrayList<>();
                 Class[] paramTypes = constructor.getParameterTypes();
                 for (Class paramt : paramTypes) {
-                    Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ").create();
-                    values.add(gson.fromJson(value.toString(), paramt));
+                    
+                    values.add(JSON.getInstance().fromJson(value.toString(), paramt));
                 }
                 instance = constructor.newInstance(values.toArray());
                 return instance;

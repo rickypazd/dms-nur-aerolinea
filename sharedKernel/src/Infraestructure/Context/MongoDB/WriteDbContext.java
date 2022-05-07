@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import com.google.gson.Gson;
 import com.mongodb.MongoClient;
 import com.mongodb.MongoClientURI;
 import com.mongodb.client.MongoDatabase;
@@ -13,6 +12,7 @@ import com.mongodb.client.MongoDatabase;
 import org.bson.Document;
 
 import Infraestructure.Context.IWriteDbContext;
+import SharedKernel.JSON;
 import SharedKernel.db.DbSet;
 
 public class WriteDbContext extends IWriteDbContext {
@@ -66,7 +66,7 @@ public class WriteDbContext extends IWriteDbContext {
 
     @Override
     public void Add(Object obj, DbSet dbSet) {
-        this.db.getCollection(dbSet.getName()).insertOne(Document.parse(new Gson().toJson(obj, obj.getClass())));
+        this.db.getCollection(dbSet.getName()).insertOne(Document.parse(JSON.getInstance().toJson(obj, obj.getClass())));
     }
 
     @Override
@@ -85,7 +85,7 @@ public class WriteDbContext extends IWriteDbContext {
         ArrayList<Object> list = new ArrayList<>();
         this.db.getCollection(dbSet.getName()).find().iterator().forEachRemaining(action -> {
             Document doc = (Document) action;
-            Object obj = new Gson().fromJson(doc.toJson(), dbSet.get_type());
+            Object obj = JSON.getInstance().fromJson(doc.toJson(), dbSet.get_type());
             if (fun.run(obj)) {
                 list.add(obj);
             }

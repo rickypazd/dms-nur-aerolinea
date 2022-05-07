@@ -4,10 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-import com.google.gson.Gson;
-
 import Domain.Event.AeronaveCreado;
 import Domain.Model.Aeronaves.ValueObjects.MatriculaAeronave;
+import SharedKernel.JSON;
 import SharedKernel.core.AggregateRoot;
 import SharedKernel.core.BussinessRuleValidateExeption;
 
@@ -43,7 +42,7 @@ public class Aeronave extends AggregateRoot<UUID> {
 
     @Override
     public String toString() {
-        return new Gson().toJson(this, Aeronave.class);
+        return JSON.getInstance().toJson(this, Aeronave.class);
     }
 
 }
