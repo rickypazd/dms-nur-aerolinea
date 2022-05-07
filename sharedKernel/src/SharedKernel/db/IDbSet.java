@@ -8,7 +8,7 @@ public interface IDbSet<T> {
 
     public void Add(T obj, DbSet<T> dbSet);
 
-    public T Single(BooleanFunction<T> fun);
+    public T Single(BooleanFunction<T> fun, DbSet<T> dbSet);
 
     public void Update(T obj, DbSet<T> dbSet);
 

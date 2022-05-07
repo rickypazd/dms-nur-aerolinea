@@ -17,7 +17,7 @@ public class AeronaveRepository implements IAeronaveRepository {
 
     @Override
     public Aeronave FindByKey(UUID key) {
-        return null;
+        return _aeronaves.Single(obj -> obj.key.equals(key));
     }
 
     @Override

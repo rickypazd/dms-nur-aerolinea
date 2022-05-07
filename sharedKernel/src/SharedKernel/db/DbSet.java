@@ -6,9 +6,9 @@ import java.util.List;
 
 import SharedKernel.core.DomainEvent;
 import SharedKernel.core.Entity;
+import SharedKernel.db.IDbSet.BooleanFunction;
 
 public class DbSet<T> {
- 
 
     private List<DomainEvent> _events;
     private DbContext _context;
@@ -27,12 +27,7 @@ public class DbSet<T> {
         return _events;
     }
 
-    public Class getType() {
-        Class a = (Class<T>) this.getClass();
-        return this.getClass().getGenericSuperclass().getClass();
-    }
-
-    public void addEvents(T obj) {
+    private void addEvents(T obj) {
         try {
             Entity entity = (Entity) obj;
             _events.addAll(entity.getDomainEvents());
@@ -57,6 +52,10 @@ public class DbSet<T> {
     public void Add(T obj) {
         addEvents(obj);
         _context.Add(obj, this);
+    }
+
+    public T Single(BooleanFunction<T> fun) {
+        return (T) _context.Single(fun, this);
     }
 
     @Override

@@ -80,9 +80,11 @@ public class WriteDbContext extends IWriteDbContext {
     }
 
     @Override
-    public Object Single(BooleanFunction fun) {
-        System.out.println("Single fun");
+    public Object Single(BooleanFunction fun, DbSet dbSet) {
+        System.out.println("WriteDbContext::Single Not implemented");
         return null;
     }
+
+    
 
 }
