@@ -1,5 +1,6 @@
 package SharedKernel.db;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,15 +16,23 @@ public class DbSet<T> {
     private DbContext _context;
 
     private String _name;
+    private Field _field;
 
-    public DbSet(DbContext context, String name) {
-        this._name = name;
+    public DbSet(DbContext context, Field field) {
+        this._name = field.getName();
+        this._field = field;
         _context = context;
         _events = new ArrayList<>();
     }
 
     public List<DomainEvent> get_events() {
         return _events;
+    }
+
+    public Class getType() {
+        Class a = (Class<T>) this.getClass();
+        
+        return this.getClass().getGenericSuperclass().getClass();
     }
 
     public void addEvents(T obj) {

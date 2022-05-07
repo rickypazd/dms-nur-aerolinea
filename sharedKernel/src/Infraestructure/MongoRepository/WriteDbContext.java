@@ -7,6 +7,7 @@ import SharedKernel.db.DbSet;
 import java.util.Arrays;
 import java.util.List;
 
+import com.google.gson.Gson;
 import com.mongodb.DB;
 import com.mongodb.MongoClient;
 import com.mongodb.MongoClientURI;
@@ -65,10 +66,13 @@ public class WriteDbContext extends DbContext {
     @Override
     public void Add(Object obj, DbSet dbSet) {
         System.out.println("WriteDbContext::Add Not implemented");
+        System.out.println(dbSet.getType().getName());
+        String json =new Gson().toJson(obj,obj.getClass());
     }
 
     @Override
     public void Update(Object obj, DbSet dbSet) {
+
         System.out.println("WriteDbContext::Update Not implemented");
     }
 
