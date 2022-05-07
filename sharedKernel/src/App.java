@@ -6,7 +6,7 @@ public class App {
     public static void ConfigureServices() {
 
         SharedKernel.Extensions.AddKernel();
-        Infraestructure.Extensions.AddInfraestructure();
-        WebApi.Extensions.AddControllers();
+        // Infraestructure.Extensions.AddInfraestructure();
+        // WebApi.Extensions.AddControllers();
     }
 }

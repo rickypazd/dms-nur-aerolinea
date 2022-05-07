@@ -22,6 +22,11 @@ public class Extensions {
             SharedKernel.mediator.Response.class,
             // Class
             SharedKernel.extensions.IServiceCollection.class,
+            // DB
+            SharedKernel.db.DbContext.class,
+            SharedKernel.db.DbSet.class,
+            SharedKernel.db.ModelBuilder.class,
+
     };
 
     public static void AddKernel() {

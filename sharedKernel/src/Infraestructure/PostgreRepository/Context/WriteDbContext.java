@@ -14,11 +14,6 @@ public class WriteDbContext extends DbContext {
     }
 
     @Override
-    public void onModelCreating() {
-
-    }
-
-    @Override
     public void SaveChangesAsync() {
         // TODO
         System.out.println("SaveChangesAsync called ot implement");

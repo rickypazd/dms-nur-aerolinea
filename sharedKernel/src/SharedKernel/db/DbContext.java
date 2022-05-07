@@ -14,7 +14,7 @@ public abstract class DbContext {
         _dbContextClass = dbContextClass;
         _dbSets = new ArrayList<>();
         this.instanceDbSet();
-        onModelCreating();
+        // onModelCreating();
     }
 
     public List<DomainEvent> getDomainEvents() {
@@ -44,7 +44,7 @@ public abstract class DbContext {
         }
     }
 
-    public abstract void onModelCreating();
+    // public abstract void onModelCreating();
 
     public abstract void SaveChangesAsync();
 }
