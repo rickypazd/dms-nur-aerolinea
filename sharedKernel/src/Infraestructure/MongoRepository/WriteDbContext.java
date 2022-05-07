@@ -6,6 +6,8 @@ import SharedKernel.db.DbSet;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import com.google.gson.Gson;
 import com.mongodb.DB;
@@ -34,6 +36,8 @@ public class WriteDbContext extends DbContext {
 
     @Override
     public void onModelCreating(List<DbSet> sets) {
+        Logger mongoLogger = Logger.getLogger("org.mongodb.driver");
+        mongoLogger.setLevel(Level.SEVERE);
         MongoClientURI uri = new MongoClientURI(
                 "mongodb://" + DB_USER + ":" + DB_PASS + "@" + DB_HOST + ":" + DB_PORT + "/?authSource=admin");
         this.client = new MongoClient(uri);
@@ -67,7 +71,7 @@ public class WriteDbContext extends DbContext {
     public void Add(Object obj, DbSet dbSet) {
         System.out.println("WriteDbContext::Add Not implemented");
         System.out.println(dbSet.getType().getName());
-        String json =new Gson().toJson(obj,obj.getClass());
+        String json = new Gson().toJson(obj, obj.getClass());
     }
 
     @Override

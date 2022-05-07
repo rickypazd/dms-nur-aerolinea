@@ -31,7 +31,6 @@ public class DbSet<T> {
 
     public Class getType() {
         Class a = (Class<T>) this.getClass();
-        
         return this.getClass().getGenericSuperclass().getClass();
     }
 
