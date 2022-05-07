@@ -10,6 +10,10 @@ public abstract class DomainEvent implements Notification {
     public LocalDateTime OcurredOn;
     public UUID Key;
 
+    public DomainEvent() {
+
+    }
+
     protected DomainEvent(LocalDateTime ocurredOn) {
         this.OcurredOn = ocurredOn;
         this.Key = UUID.randomUUID();

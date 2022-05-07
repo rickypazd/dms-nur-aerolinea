@@ -1,5 +1,6 @@
 package Infraestructure.Context.MongoDB;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -81,10 +82,18 @@ public class WriteDbContext extends IWriteDbContext {
 
     @Override
     public Object Single(BooleanFunction fun, DbSet dbSet) {
-        System.out.println("WriteDbContext::Single Not implemented");
+        ArrayList<Object> list = new ArrayList<>();
+        this.db.getCollection(dbSet.getName()).find().iterator().forEachRemaining(action -> {
+            Document doc = (Document) action;
+            Object obj = new Gson().fromJson(doc.toJson(), dbSet.get_type());
+            if (fun.run(obj)) {
+                list.add(obj);
+            }
+        });
+        if (list.size() > 0) {
+            return list.get(0);
+        }
         return null;
     }
-
-    
 
 }

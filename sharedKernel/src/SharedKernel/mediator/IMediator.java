@@ -47,9 +47,9 @@ public class IMediator implements Mediator {
                     this);
             response.data = plan.invoke(request);
 
-        } catch (NoSuchMethodException | SecurityException | ClassNotFoundException | IllegalAccessException
-                | IllegalArgumentException | InvocationTargetException e) {
-            response.exception = (Exception) e;
+        } catch (Exception e) {
+            e.printStackTrace();
+            // response.exception = (Exception) e;
         }
         return response;
     }

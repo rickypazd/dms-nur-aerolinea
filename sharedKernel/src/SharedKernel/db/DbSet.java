@@ -1,6 +1,7 @@
 package SharedKernel.db;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.ParameterizedType;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,12 +16,19 @@ public class DbSet<T> {
 
     private String _name;
     private Field _field;
+    private Class<T> _type;
 
     public DbSet(DbContext context, Field field) {
         this._name = field.getName();
         this._field = field;
+        ParameterizedType genericType = (ParameterizedType) field.getGenericType();
+        _type = (Class<T>) genericType.getActualTypeArguments()[0];
         _context = context;
         _events = new ArrayList<>();
+    }
+
+    public Class<T> get_type() {
+        return _type;
     }
 
     public List<DomainEvent> get_events() {

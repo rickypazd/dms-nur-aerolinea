@@ -10,14 +10,15 @@ import Domain.Event.AeronaveCreado;
 import Domain.Model.Aeronaves.ValueObjects.MatriculaAeronave;
 import SharedKernel.core.AggregateRoot;
 import SharedKernel.core.BussinessRuleValidateExeption;
-import SharedKernel.http.HttpStatus;
-import SharedKernel.http.Exception.HttpException;
 
 public class Aeronave extends AggregateRoot<UUID> {
 
     public String matricula;
     private List<Asiento> asientos;
 
+    public Aeronave() {
+
+    }
     public Aeronave(String matricula) {
         key = UUID.randomUUID();
         try {
