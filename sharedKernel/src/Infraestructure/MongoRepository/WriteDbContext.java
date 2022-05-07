@@ -18,7 +18,6 @@ public class WriteDbContext extends DbContext {
     public DbSet<Asiento> Asiento;
 
     private MongoClient db;
-
     private final String DB_NAME = "admin";
     private final String DB_USER = "root";
     private final String DB_PASS = "rootpassword";
@@ -43,6 +42,11 @@ public class WriteDbContext extends DbContext {
     }
 
     @Override
+    public boolean isConnected() {
+        return this.db != null;
+    }
+
+    @Override
     public void Commit() {
         System.out.println("WriteDbContext::Commit Not implemented");
     }
@@ -58,19 +62,18 @@ public class WriteDbContext extends DbContext {
     }
 
     @Override
-    public void Add(Object obj) {
+    public void Add(Object obj, DbSet dbSet) {
         System.out.println("WriteDbContext::Add Not implemented");
     }
 
     @Override
-    public void Update(Object obj) {
+    public void Update(Object obj, DbSet dbSet) {
         System.out.println("WriteDbContext::Update Not implemented");
-
     }
 
     @Override
-    public boolean isConnected() {
-        return this.db != null;
+    public void Delete(Object obj, DbSet dbSet) {
+        System.out.println("WriteDbContext::Delete Not implemented");
     }
 
 }

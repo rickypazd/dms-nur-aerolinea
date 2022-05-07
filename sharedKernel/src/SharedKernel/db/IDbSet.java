@@ -4,9 +4,11 @@ package SharedKernel.db;
 
 public interface IDbSet<T> {
 
-    public void Add(T obj);
+    public void Add(T obj, DbSet<T> dbSet);
 
     // public T Single(BooleanFunction<T> fun);
 
-    public void Update(T obj);
+    public void Update(T obj, DbSet<T> dbSet);
+
+    public void Delete(T obj, DbSet<T> dbSet);
 }
