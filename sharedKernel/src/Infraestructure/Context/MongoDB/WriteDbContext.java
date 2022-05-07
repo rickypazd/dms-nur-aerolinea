@@ -66,7 +66,8 @@ public class WriteDbContext extends IWriteDbContext {
 
     @Override
     public void Add(Object obj, DbSet dbSet) {
-        this.db.getCollection(dbSet.getName()).insertOne(Document.parse(JSON.getInstance().toJson(obj, obj.getClass())));
+        this.db.getCollection(dbSet.getName())
+                .insertOne(Document.parse(JSON.getInstance().toJson(obj, obj.getClass())));
     }
 
     @Override
@@ -84,8 +85,7 @@ public class WriteDbContext extends IWriteDbContext {
     public Object Single(BooleanFunction fun, DbSet dbSet) {
         ArrayList<Object> list = new ArrayList<>();
         this.db.getCollection(dbSet.getName()).find().iterator().forEachRemaining(action -> {
-            Document doc = (Document) action;
-            Object obj = JSON.getInstance().fromJson(doc.toJson(), dbSet.get_type());
+            Object obj = parseObject(dbSet, (Document) action);
             if (fun.run(obj)) {
                 list.add(obj);
             }
@@ -94,6 +94,31 @@ public class WriteDbContext extends IWriteDbContext {
             return list.get(0);
         }
         return null;
+    }
+
+    @Override
+    public List All(DbSet dbSet) {
+        ArrayList<Object> list = new ArrayList<>();
+        this.db.getCollection(dbSet.getName()).find().iterator().forEachRemaining(action -> {
+            list.add(parseObject(dbSet, (Document) action));
+        });
+        return list;
+    }
+
+    @Override
+    public List Filter(BooleanFunction fun, DbSet dbSet) {
+        ArrayList<Object> list = new ArrayList<>();
+        this.db.getCollection(dbSet.getName()).find().iterator().forEachRemaining(action -> {
+            Object obj = parseObject(dbSet, (Document) action);
+            if (fun.run(obj)) {
+                list.add(obj);
+            }
+        });
+        return list;
+    }
+
+    public Object parseObject(DbSet dbSet, Document doc) {
+        return JSON.getInstance().fromJson(doc.toJson(), dbSet.get_type());
     }
 
 }
