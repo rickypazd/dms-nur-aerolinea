@@ -32,8 +32,7 @@ public class WriteDbContext extends IWriteDbContext {
     public void onModelCreating(List<DbSet> sets) {
         Logger mongoLogger = Logger.getLogger("org.mongodb.driver");
         mongoLogger.setLevel(Level.SEVERE);
-        MongoClientURI uri = new MongoClientURI(
-                "mongodb://" + DB_USER + ":" + DB_PASS + "@" + DB_HOST + ":" + DB_PORT + "/?authSource=admin");
+        MongoClientURI uri = new MongoClientURI("mongodb://" + DB_USER + ":" + DB_PASS + "@" + DB_HOST + ":" + DB_PORT + "/?authSource=admin");
         this.client = new MongoClient(uri);
         this.db = client.getDatabase(DB_NAME);
         sets.iterator().forEachRemaining(obj -> {

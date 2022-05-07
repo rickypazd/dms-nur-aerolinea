@@ -1,25 +1,18 @@
 package Infraestructure.Context.MongoDB;
 
-import Domain.Model.Aeronaves.*;
-import Infraestructure.Context.IWriteDbContext;
-import SharedKernel.db.DbContext;
-import SharedKernel.db.DbSet;
-
-import java.util.Arrays;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import com.google.gson.Gson;
-import com.mongodb.BasicDBObject;
-import com.mongodb.DB;
 import com.mongodb.MongoClient;
 import com.mongodb.MongoClientURI;
-import com.mongodb.MongoCredential;
-import com.mongodb.ServerAddress;
 import com.mongodb.client.MongoDatabase;
 
 import org.bson.Document;
+
+import Infraestructure.Context.IWriteDbContext;
+import SharedKernel.db.DbSet;
 
 public class WriteDbContext extends IWriteDbContext {
 

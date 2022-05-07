@@ -10,8 +10,7 @@ public class Extensions {
         Application.Extensions.AddApplication();
         IServiceCollection.AddMediator();
 
-        IServiceCollection.AddScoped(IWriteDbContext.class, Infraestructure.Context.PostgreSQL.WriteDbContext.class);
-
+        IServiceCollection.AddScoped(IWriteDbContext.class, Infraestructure.Context.MongoDB.WriteDbContext.class);
         IServiceCollection.AddScoped(IUnitOfWork.class, UnitOfWork.class);
         IServiceCollection.AddScoped(IAeronaveRepository.class, AeronaveRepository.class);
     }
