@@ -15,13 +15,13 @@ public class CrearAeronaveHandler implements RequestHandler<CrearAeronaveCommand
 
     private IAeronaveFactory _aeronaveFactory;
     private IAeronaveRepository _aeronaveRepository;
-    private IUnitOfWork _unitOfWor;
+    private IUnitOfWork _unitOfWork;
 
     public CrearAeronaveHandler(IAeronaveFactory aeronaveFactory, IAeronaveRepository aeronaveRepository,
-            IUnitOfWork unitOfWor) {
+            IUnitOfWork _unitOfWork) {
         this._aeronaveFactory = aeronaveFactory;
         this._aeronaveRepository = aeronaveRepository;
-        this._unitOfWor = unitOfWor;
+        this._unitOfWork = _unitOfWork;
     }
 
     @Override
@@ -30,7 +30,7 @@ public class CrearAeronaveHandler implements RequestHandler<CrearAeronaveCommand
         aeronave.eventCreado();
 
         _aeronaveRepository.Create(aeronave);
-        _unitOfWor.commit();
+        _unitOfWork.commit();
         return aeronave;
 
     }

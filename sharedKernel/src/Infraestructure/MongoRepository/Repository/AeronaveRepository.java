@@ -1,10 +1,10 @@
-package Infraestructure.PostgreRepository.Repository;
+package Infraestructure.MongoRepository.Repository;
 
 import java.util.UUID;
 
 import Domain.Model.Aeronaves.Aeronave;
 import Domain.Repositories.IAeronaveRepository;
-import Infraestructure.PostgreRepository.Context.WriteDbContext;
+import Infraestructure.MongoRepository.*;
 import SharedKernel.db.DbSet;
 
 public class AeronaveRepository implements IAeronaveRepository {
@@ -17,13 +17,12 @@ public class AeronaveRepository implements IAeronaveRepository {
 
     @Override
     public Aeronave FindByKey(UUID key) {
-        // TODO: Implement this method
         return null;
     }
 
     @Override
     public void Create(Aeronave obj) {
-        _aeronaves.AddAsync(obj);
+        _aeronaves.Add(obj);
     }
 
 }

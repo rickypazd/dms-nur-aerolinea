@@ -14,7 +14,7 @@ public class Extensions {
         // INFO:Usamos el IMediator del kernel en cambio del MediatR de Spring
         IMediator.registerHandler(GetAeronaveByKeyHandler.class);
         IMediator.registerHandler(CrearAeronaveHandler.class);
-        IMediator.registerHandler(UpdateAsientosWhenAeronaveCreadoHandler.class);
+        // IMediator.registerHandler(UpdateAsientosWhenAeronaveCreadoHandler.class);
 
         IServiceCollection.AddTransient(IAeronaveFactory.class, AeronaveFactory.class);
     }

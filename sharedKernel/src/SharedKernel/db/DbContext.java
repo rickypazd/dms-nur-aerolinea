@@ -6,7 +6,7 @@ import java.util.List;
 
 import SharedKernel.core.DomainEvent;
 
-public abstract class DbContext {
+public abstract class DbContext implements IDbContext {
     private List<DbSet> _dbSets;
     private Class _dbContextClass;
 
@@ -31,7 +31,7 @@ public abstract class DbContext {
             if (field.getType().getName().contains(SharedKernel.db.DbSet.class.getName())) {
                 System.out.println(field.getName());
                 try {
-                    field.set(this, new DbSet<>());
+                    field.set(this, new DbSet<>(this));
                     _dbSets.add((DbSet) field.get(this));
                 } catch (IllegalArgumentException e) {
                     e.printStackTrace();
@@ -44,7 +44,4 @@ public abstract class DbContext {
         }
     }
 
-    // public abstract void onModelCreating();
-
-    public abstract void SaveChangesAsync();
 }

@@ -14,8 +14,21 @@ public class WriteDbContext extends DbContext {
     }
 
     @Override
-    public void SaveChangesAsync() {
+    public void Commit() {
         // TODO
         System.out.println("SaveChangesAsync called ot implement");
     }
+
+    @Override
+    public void Add(Object obj) {
+        // TODO Auto-generated method stub
+
+    }
+
+    @Override
+    public void Update(Object obj) {
+        // TODO Auto-generated method stub
+
+    }
+
 }

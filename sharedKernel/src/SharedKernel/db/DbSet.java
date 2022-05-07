@@ -6,14 +6,17 @@ import java.util.List;
 import SharedKernel.core.DomainEvent;
 import SharedKernel.core.Entity;
 
-public class DbSet<T> {
+public class DbSet<T> implements IDbSet<T> {
     interface BooleanFunction<E> {
         boolean run(E str);
     }
 
     private List<DomainEvent> _events;
 
-    public DbSet() {
+    private DbContext _context;
+
+    public DbSet(DbContext context) {
+        _context = context;
         _events = new ArrayList<>();
     }
 
@@ -30,17 +33,17 @@ public class DbSet<T> {
         }
     }
 
-    public void AddAsync(T obj) {
+    public void Add(T obj) {
         addEvents(obj);
-        // TODO: Complete on return task
+        _context.Add(obj);
     }
 
-    public T SingleAsync(BooleanFunction<T> fun) {
-        // TODO: Complete on return task
-        return null;
-    }
+    // public T SingleAsync(BooleanFunction<T> fun) {
+    // return (T) _context.SingleAsync(fun);
+    // }
 
     public void Update(T obj) {
         addEvents(obj);
+        _context.Update(obj);
     }
 }

@@ -23,6 +23,6 @@ public class AsientoRepository implements IAsientoRepository {
 
     @Override
     public void Create(Asiento obj) {
-        _asientos.AddAsync(obj);
+        _asientos.Add(obj);
     }
 }

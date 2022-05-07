@@ -28,7 +28,7 @@ public class MediatorPlanNotify {
             instance = DependencyInjection.createInstance(handlerInstanceBuilder, mediator);
             handleMethod = handlerInstanceBuilder.getMethod(handlerMethodName, Notification.class);
         } catch (Exception e) {
-            e.printStackTrace();
+            System.out.println("Not found notification handler for " + messageType.getName());
         }
     }
 
