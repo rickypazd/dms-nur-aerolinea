@@ -1,22 +1,14 @@
-package Infraestructure.Context.MongoDB;
+package Infraestructure.Context.PostgreSQL;
 
-import Domain.Model.Aeronaves.*;
 import Infraestructure.Context.IWriteDbContext;
-import SharedKernel.db.DbContext;
 import SharedKernel.db.DbSet;
-
-import java.util.Arrays;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import com.google.gson.Gson;
-import com.mongodb.BasicDBObject;
-import com.mongodb.DB;
 import com.mongodb.MongoClient;
 import com.mongodb.MongoClientURI;
-import com.mongodb.MongoCredential;
-import com.mongodb.ServerAddress;
 import com.mongodb.client.MongoDatabase;
 
 import org.bson.Document;
@@ -26,7 +18,7 @@ public class WriteDbContext extends IWriteDbContext {
     private MongoClient client;
     private MongoDatabase db;
 
-    private final String DB_NAME = "dmsnur_aeronave";
+    private final String DB_NAME = "dmsnur_postgres";
     private final String DB_USER = "root";
     private final String DB_PASS = "rootpassword";
     private final String DB_HOST = "servisofts.com";

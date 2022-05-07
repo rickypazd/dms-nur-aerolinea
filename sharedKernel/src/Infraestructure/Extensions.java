@@ -2,9 +2,7 @@ package Infraestructure;
 
 import Domain.Repositories.*;
 import SharedKernel.extensions.IServiceCollection;
-
-//Mongo Imports
-import Infraestructure.MongoRepository.*;
+import Infraestructure.Context.IWriteDbContext;
 import Infraestructure.Repository.*;
 
 public class Extensions {
@@ -12,10 +10,9 @@ public class Extensions {
         Application.Extensions.AddApplication();
         IServiceCollection.AddMediator();
 
-        IServiceCollection.AddScoped(WriteDbContext.class, WriteDbContext.class);
+        IServiceCollection.AddScoped(IWriteDbContext.class, Infraestructure.Context.PostgreSQL.WriteDbContext.class);
+
         IServiceCollection.AddScoped(IUnitOfWork.class, UnitOfWork.class);
         IServiceCollection.AddScoped(IAeronaveRepository.class, AeronaveRepository.class);
-        // IServiceCollection.AddScoped(IAsientoRepository.class,
-        // AsientoRepository.class);
     }
 }

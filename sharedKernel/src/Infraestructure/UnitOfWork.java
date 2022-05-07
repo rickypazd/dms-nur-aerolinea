@@ -1,7 +1,8 @@
-package Infraestructure.MongoRepository;
+package Infraestructure;
 
 import java.util.List;
 import Domain.Repositories.IUnitOfWork;
+import Infraestructure.Context.MongoDB.WriteDbContext;
 import SharedKernel.core.DomainEvent;
 import SharedKernel.mediator.Mediator;
 

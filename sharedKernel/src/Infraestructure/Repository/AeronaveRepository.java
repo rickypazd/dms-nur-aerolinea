@@ -4,14 +4,14 @@ import java.util.UUID;
 
 import Domain.Model.Aeronaves.Aeronave;
 import Domain.Repositories.IAeronaveRepository;
-import Infraestructure.Context.MongoDB.*;
+import Infraestructure.Context.IWriteDbContext;
 import SharedKernel.db.DbSet;
 
 public class AeronaveRepository implements IAeronaveRepository {
 
     private DbSet<Aeronave> _aeronaves;
 
-    public AeronaveRepository(WriteDbContext database) {
+    public AeronaveRepository(IWriteDbContext database) {
         _aeronaves = database.Aeronave;
     }
 
