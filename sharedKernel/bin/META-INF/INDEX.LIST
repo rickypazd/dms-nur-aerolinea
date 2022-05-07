@@ -1,0 +1,18 @@
+JarIndex-Version: 1.0
+
+httpserver-1.0.8.Final.jar
+META-INF
+META-INF/maven
+META-INF/maven/org.jboss.com.sun.httpserver
+META-INF/maven/org.jboss.com.sun.httpserver/httpserver
+org
+org/jboss
+org/jboss/com
+org/jboss/com/sun
+org/jboss/com/sun/net
+org/jboss/com/sun/net/httpserver
+org/jboss/com/sun/net/httpserver/spi
+org/jboss/sun
+org/jboss/sun/net
+org/jboss/sun/net/httpserver
+

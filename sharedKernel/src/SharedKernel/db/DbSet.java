@@ -8,9 +8,7 @@ import SharedKernel.core.DomainEvent;
 import SharedKernel.core.Entity;
 
 public class DbSet<T> {
-    interface BooleanFunction<E> {
-        boolean run(E str);
-    }
+ 
 
     private List<DomainEvent> _events;
     private DbContext _context;

@@ -1,12 +1,14 @@
 package SharedKernel.db;
 
-// import SharedKernel.db.DbSet.BooleanFunction;
-
 public interface IDbSet<T> {
+
+    public interface BooleanFunction<E> {
+        boolean run(E str);
+    }
 
     public void Add(T obj, DbSet<T> dbSet);
 
-    // public T Single(BooleanFunction<T> fun);
+    public T Single(BooleanFunction<T> fun);
 
     public void Update(T obj, DbSet<T> dbSet);
 

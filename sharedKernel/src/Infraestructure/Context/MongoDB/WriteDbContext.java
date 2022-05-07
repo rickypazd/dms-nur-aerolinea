@@ -79,4 +79,10 @@ public class WriteDbContext extends IWriteDbContext {
         System.out.println("WriteDbContext::Delete Not implemented");
     }
 
+    @Override
+    public Object Single(BooleanFunction fun) {
+        System.out.println("Single fun");
+        return null;
+    }
+
 }

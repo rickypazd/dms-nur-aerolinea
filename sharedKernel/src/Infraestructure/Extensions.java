@@ -13,5 +13,6 @@ public class Extensions {
         IServiceCollection.AddScoped(IWriteDbContext.class, Infraestructure.Context.MongoDB.WriteDbContext.class);
         IServiceCollection.AddScoped(IUnitOfWork.class, UnitOfWork.class);
         IServiceCollection.AddScoped(IAeronaveRepository.class, AeronaveRepository.class);
+        IServiceCollection.AddScoped(IAsientoRepository.class, AsientoRepository.class);
     }
 }
