@@ -3,11 +3,9 @@ package Infraestructure;
 import Domain.Repositories.*;
 import SharedKernel.extensions.IServiceCollection;
 
-
 //Mongo Imports
 import Infraestructure.MongoRepository.*;
-import Infraestructure.MongoRepository.Repository.*;
-
+import Infraestructure.Repository.*;
 
 public class Extensions {
     public static void AddInfraestructure() {

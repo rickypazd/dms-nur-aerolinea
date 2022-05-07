@@ -1,10 +1,10 @@
-package Infraestructure.MongoRepository.Repository;
+package Infraestructure.Repository;
 
 import java.util.UUID;
 
 import Domain.Model.Aeronaves.Aeronave;
 import Domain.Repositories.IAeronaveRepository;
-import Infraestructure.MongoRepository.*;
+import Infraestructure.Context.MongoDB.*;
 import SharedKernel.db.DbSet;
 
 public class AeronaveRepository implements IAeronaveRepository {

@@ -27,6 +27,7 @@ public class WriteDbContext extends DbContext {
 
     private MongoClient client;
     private MongoDatabase db;
+    
     private final String DB_NAME = "dmsnur_aeronave";
     private final String DB_USER = "root";
     private final String DB_PASS = "rootpassword";
