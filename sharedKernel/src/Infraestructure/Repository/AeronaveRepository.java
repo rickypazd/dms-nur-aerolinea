@@ -33,7 +33,14 @@ public class AeronaveRepository implements IAeronaveRepository {
 
     @Override
     public Aeronave Delete(Aeronave obj) {
-        _aeronaves.Delete(obj);
+        _aeronaves.Delete((it -> it.key.equals(obj.key)));
+        return obj;
+
+    }
+
+    @Override
+    public Aeronave Update(Aeronave obj) {
+        _aeronaves.Update(obj, (it -> it.key.equals(obj.key)));
         return obj;
 
     }

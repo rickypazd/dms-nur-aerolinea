@@ -5,6 +5,7 @@ import java.util.List;
 
 import Application.Dto.AeronaveDto;
 import Application.UseCases.Command.Aeronaves.Crear.CrearAeronaveCommand;
+import Application.UseCases.Command.Aeronaves.Editar.EditarAeronaveCommand;
 import Application.UseCases.Command.Aeronaves.Eliminar.EliminarAeronaveCommand;
 import Application.UseCases.Queries.Aeronaves.GetAll.GetAllAeronaveQuery;
 import Application.UseCases.Queries.Aeronaves.GetByKey.GetAeronaveByKeyQuery;
@@ -41,8 +42,10 @@ public class AeronaveController {
     }
 
     @PutMapping("/{key}")
-    public Aeronave edit(@RequestBody Aeronave aeronave, @PathVariable String key) {
-        return aeronave;
+    public Response<Aeronave> edit(@RequestBody Aeronave aeronave, @PathVariable EditarAeronaveCommand request)
+            throws HttpException {
+        request.aeronave.matricula = aeronave.matricula;
+        return _mediator.send(request);
     }
 
     @DeleteMapping("/{key}")

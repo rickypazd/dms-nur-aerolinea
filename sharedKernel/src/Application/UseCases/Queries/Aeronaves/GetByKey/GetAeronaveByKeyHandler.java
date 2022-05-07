@@ -4,6 +4,8 @@ import Application.Dto.AeronaveDto;
 import Application.Dto.AsientoDto;
 import Domain.Model.Aeronaves.Aeronave;
 import Domain.Repositories.IAeronaveRepository;
+import SharedKernel.http.HttpStatus;
+import SharedKernel.http.Exception.HttpException;
 import SharedKernel.mediator.RequestHandler;
 
 public class GetAeronaveByKeyHandler implements RequestHandler<GetAeronaveByKeyQuery, AeronaveDto> {
@@ -15,11 +17,11 @@ public class GetAeronaveByKeyHandler implements RequestHandler<GetAeronaveByKeyQ
     }
 
     @Override
-    public AeronaveDto handle(GetAeronaveByKeyQuery request) {
+    public AeronaveDto handle(GetAeronaveByKeyQuery request) throws HttpException {
         System.out.println(request.key);
         Aeronave aeronave = _aeronaveRepository.FindByKey(request.key);
         if (aeronave == null) {
-            return null;
+            throw new HttpException(HttpStatus.BAD_REQUEST, "Aeronave no encontrada");
         }
         AeronaveDto aeronaveDto = new AeronaveDto();
         aeronaveDto.matricula = aeronave.matricula;

@@ -8,6 +8,8 @@ import java.util.logging.Logger;
 import com.mongodb.MongoClient;
 import com.mongodb.MongoClientURI;
 import com.mongodb.client.MongoDatabase;
+import com.mongodb.client.model.Filters;
+import com.mongodb.client.model.Updates;
 
 import org.bson.Document;
 
@@ -71,15 +73,25 @@ public class WriteDbContext extends IWriteDbContext {
     }
 
     @Override
-    public void Update(Object obj, DbSet dbSet) {
-
-        System.out.println("WriteDbContext::Update Not implemented");
+    public void Update(Object obj_to_edit, BooleanFunction fun, DbSet dbSet) {
+        this.db.getCollection(dbSet.getName()).find().iterator().forEachRemaining(action -> {
+            Object obj = parseObject(dbSet, (Document) action);
+            if (fun.run(obj)) {
+                Document doc = Document.parse(JSON.getInstance().toJson(obj_to_edit, obj_to_edit.getClass()));
+                this.db.getCollection(dbSet.getName()).updateOne(Filters.eq("_id", action.get("_id")),
+                        Updates.set("$set", doc));
+            }
+        });
     }
 
     @Override
-    public void Delete(Object obj, DbSet dbSet) {
-        // this.db.getCollection(dbSet.getName()).deleteMany(filter)
-        System.out.println("Not implemented");
+    public void Delete(BooleanFunction fun, DbSet dbSet) {
+        this.db.getCollection(dbSet.getName()).find().iterator().forEachRemaining(action -> {
+            Object obj = parseObject(dbSet, (Document) action);
+            if (fun.run(obj)) {
+                this.db.getCollection(dbSet.getName()).deleteOne(action);
+            }
+        });
     }
 
     @Override
