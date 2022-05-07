@@ -9,4 +9,5 @@ import SharedKernel.core.IRepository;
 public interface IAeronaveRepository extends IRepository<Aeronave, UUID> {
 
     public List<Aeronave> GetAll();
+    public Aeronave Delete(Aeronave aeronave);
 }

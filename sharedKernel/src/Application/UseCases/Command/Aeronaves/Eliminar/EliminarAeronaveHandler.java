@@ -27,7 +27,8 @@ public class EliminarAeronaveHandler implements RequestHandler<EliminarAeronaveC
         if (aeronave == null) {
             throw new HttpException(HttpStatus.BAD_REQUEST, "Aeronave no encontrada");
         }
-        return null;
+        
+        return _aeronaveRepository.Delete(aeronave);
 
     }
 

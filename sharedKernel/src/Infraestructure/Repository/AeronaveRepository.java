@@ -31,4 +31,11 @@ public class AeronaveRepository implements IAeronaveRepository {
         return _aeronaves.All();
     }
 
+    @Override
+    public Aeronave Delete(Aeronave obj) {
+        _aeronaves.Delete(obj);
+        return obj;
+
+    }
+
 }

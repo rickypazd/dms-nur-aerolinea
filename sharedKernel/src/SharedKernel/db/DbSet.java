@@ -40,7 +40,7 @@ public class DbSet<T> {
             Entity entity = (Entity) obj;
             _events.addAll(entity.getDomainEvents());
         } catch (Exception e) {
-            e.printStackTrace();
+           System.err.println("Not an entity");
         }
     }
 
@@ -55,6 +55,11 @@ public class DbSet<T> {
     public void Update(T obj) {
         addEvents(obj);
         _context.Update(obj, this);
+    }
+
+    public void Delete(T obj) {
+        addEvents(obj);
+        _context.Delete(obj, this);
     }
 
     public void Add(T obj) {

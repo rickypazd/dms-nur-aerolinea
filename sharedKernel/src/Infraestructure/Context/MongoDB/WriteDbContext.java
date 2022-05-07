@@ -78,7 +78,8 @@ public class WriteDbContext extends IWriteDbContext {
 
     @Override
     public void Delete(Object obj, DbSet dbSet) {
-        System.out.println("WriteDbContext::Delete Not implemented");
+        // this.db.getCollection(dbSet.getName()).deleteMany(filter)
+        System.out.println("Not implemented");
     }
 
     @Override
