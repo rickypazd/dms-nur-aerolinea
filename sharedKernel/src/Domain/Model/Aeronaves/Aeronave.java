@@ -6,7 +6,6 @@ import java.util.UUID;
 
 import Domain.Event.AeronaveCreado;
 import Domain.Model.Aeronaves.ValueObjects.MatriculaAeronave;
-import SharedKernel.JSON;
 import SharedKernel.core.AggregateRoot;
 import SharedKernel.core.BussinessRuleValidateExeption;
 
@@ -39,10 +38,4 @@ public class Aeronave extends AggregateRoot<UUID> {
         });
         asientos.add(asiento);
     }
-
-    @Override
-    public String toString() {
-        return JSON.getInstance().toJson(this, Aeronave.class);
-    }
-
 }
