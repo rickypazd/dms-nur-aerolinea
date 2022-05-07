@@ -10,12 +10,15 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import com.google.gson.Gson;
+import com.mongodb.BasicDBObject;
 import com.mongodb.DB;
 import com.mongodb.MongoClient;
 import com.mongodb.MongoClientURI;
 import com.mongodb.MongoCredential;
 import com.mongodb.ServerAddress;
 import com.mongodb.client.MongoDatabase;
+
+import org.bson.Document;
 
 public class WriteDbContext extends DbContext {
 
@@ -24,7 +27,7 @@ public class WriteDbContext extends DbContext {
 
     private MongoClient client;
     private MongoDatabase db;
-    private final String DB_NAME = "dmsnur-aeronave";
+    private final String DB_NAME = "dmsnur_aeronave";
     private final String DB_USER = "root";
     private final String DB_PASS = "rootpassword";
     private final String DB_HOST = "servisofts.com";
@@ -44,6 +47,7 @@ public class WriteDbContext extends DbContext {
         this.db = client.getDatabase(DB_NAME);
         sets.iterator().forEachRemaining(obj -> {
             this.db.getCollection(obj.getName());
+
         });
     }
 
@@ -69,9 +73,7 @@ public class WriteDbContext extends DbContext {
 
     @Override
     public void Add(Object obj, DbSet dbSet) {
-        System.out.println("WriteDbContext::Add Not implemented");
-        System.out.println(dbSet.getType().getName());
-        String json = new Gson().toJson(obj, obj.getClass());
+        this.db.getCollection(dbSet.getName()).insertOne(Document.parse(new Gson().toJson(obj, obj.getClass())));
     }
 
     @Override
