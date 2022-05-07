@@ -14,7 +14,7 @@ public abstract class DbContext implements IDbContext {
         _dbContextClass = dbContextClass;
         _dbSets = new ArrayList<>();
         this.instanceDbSet();
-        // onModelCreating();
+        onModelCreating(_dbSets);
     }
 
     public List<DomainEvent> getDomainEvents() {
