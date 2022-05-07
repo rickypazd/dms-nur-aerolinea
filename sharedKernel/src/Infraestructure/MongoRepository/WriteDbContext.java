@@ -7,18 +7,21 @@ import SharedKernel.db.DbSet;
 import java.util.Arrays;
 import java.util.List;
 
+import com.mongodb.DB;
 import com.mongodb.MongoClient;
 import com.mongodb.MongoClientURI;
 import com.mongodb.MongoCredential;
 import com.mongodb.ServerAddress;
+import com.mongodb.client.MongoDatabase;
 
 public class WriteDbContext extends DbContext {
 
     public DbSet<Aeronave> Aeronave;
     public DbSet<Asiento> Asiento;
 
-    private MongoClient db;
-    private final String DB_NAME = "admin";
+    private MongoClient client;
+    private MongoDatabase db;
+    private final String DB_NAME = "dmsnur-aeronave";
     private final String DB_USER = "root";
     private final String DB_PASS = "rootpassword";
     private final String DB_HOST = "servisofts.com";
@@ -26,19 +29,17 @@ public class WriteDbContext extends DbContext {
 
     public WriteDbContext() {
         super(WriteDbContext.class);
-        MongoClientURI uri = new MongoClientURI(
-                "mongodb://" + DB_USER + ":" + DB_PASS + "@" + DB_HOST + ":" + DB_PORT + "/?authSource=" + DB_NAME);
-
-        this.db = new MongoClient(uri);
-        this.db.listDatabases().iterator().forEachRemaining(i -> {
-            System.out.println(i.toJson());
-        });
-
     }
 
     @Override
     public void onModelCreating(List<DbSet> sets) {
-        System.out.println("WriteDbContext::onModelCreating Not implemented");
+        MongoClientURI uri = new MongoClientURI(
+                "mongodb://" + DB_USER + ":" + DB_PASS + "@" + DB_HOST + ":" + DB_PORT + "/?authSource=admin");
+        this.client = new MongoClient(uri);
+        this.db = client.getDatabase(DB_NAME);
+        sets.iterator().forEachRemaining(obj -> {
+            this.db.getCollection(obj.getName());
+        });
     }
 
     @Override
