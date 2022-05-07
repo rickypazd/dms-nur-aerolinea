@@ -14,7 +14,7 @@ import SharedKernel.core.BussinessRuleValidateExeption;
 public class Aeronave extends AggregateRoot<UUID> {
 
     public String matricula;
-    private List<Asiento> asientos;
+    public List<Asiento> asientos;
 
     public Aeronave() {
 

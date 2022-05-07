@@ -3,6 +3,7 @@ package Application.UseCases.Queries.Aeronaves;
 import java.util.UUID;
 
 import Application.Dto.AeronaveDto;
+import Application.Dto.AsientoDto;
 import Domain.Model.Aeronaves.Aeronave;
 import Domain.Repositories.IAeronaveRepository;
 import SharedKernel.http.HttpStatus;
@@ -26,6 +27,10 @@ public class GetAeronaveByKeyHandler implements RequestHandler<GetAeronaveByKeyQ
         }
         AeronaveDto aeronaveDto = new AeronaveDto();
         aeronaveDto.matricula = aeronave.matricula;
+        aeronave.asientos.iterator().forEachRemaining(obj -> {
+            aeronaveDto.asientos.add(new AsientoDto(obj.key, obj.numero, obj.clase));
+        });
+        // aeronaveDto.asientos = aeronave.asientos;
         return aeronaveDto;
     }
 }
