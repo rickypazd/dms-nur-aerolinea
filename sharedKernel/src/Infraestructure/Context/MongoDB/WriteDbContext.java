@@ -2,6 +2,7 @@ package Infraestructure.Context.MongoDB;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -74,14 +75,27 @@ public class WriteDbContext extends IWriteDbContext {
 
     @Override
     public void Update(Object obj_to_edit, BooleanFunction fun, DbSet dbSet) {
-        this.db.getCollection(dbSet.getName()).find().iterator().forEachRemaining(action -> {
-            Object obj = parseObject(dbSet, (Document) action);
-            if (fun.run(obj)) {
-                Document doc = Document.parse(JSON.getInstance().toJson(obj_to_edit, obj_to_edit.getClass()));
-                this.db.getCollection(dbSet.getName()).updateOne(Filters.eq("_id", action.get("_id")),
-                        Updates.set("$set", doc));
-            }
-        });
+        try {
+            this.db.getCollection(dbSet.getName()).find().iterator().forEachRemaining(action -> {
+                Object obj = parseObject(dbSet, (Document) action);
+                if (fun.run(obj)) {
+                    Document doc = Document.parse(JSON.getInstance().toJson(obj_to_edit, obj_to_edit.getClass()));
+                    doc.entrySet().iterator().forEachRemaining(k -> {
+                        if (!k.getKey().equals("_id")) {
+                            action.replace(k.getKey(), doc.get(k.getKey()));
+                        }
+                    });
+                    this.db.getCollection(dbSet.getName()).replaceOne(Filters.eq("_id", action.get("_id")), action);
+                    // Object id = action.get("_id");
+                    // action.remove("_id");
+                    // this.db.getCollection(dbSet.getName()).updateOne(Filters.eq("_id", id),
+                    // action);
+                }
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
     }
 
     @Override
